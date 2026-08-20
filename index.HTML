@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phần Mềm Giảng Dạy: Xuất Xứ & Phân Loại Hàng Hóa (Chương 3)</title>
+    <!-- Thư viện hỗ trợ xuất PDF A4 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --bg-light-blue: #e8f4f8;
+            --primary-blue: #006699;
+            --secondary-blue: #004080;
+            --light-yellow: #fff9c4;
+            --accent-yellow: #fbc02d;
+            --bright-red: #ff1744;
+            --white: #ffffff;
+            --dark-text: #2c3e50;
+            --border-color: #b2ebf2;
+            --success-green: #2e7d32;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light-blue);
+            color: var(--dark-text);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 15px 20px;
+            border-bottom: 4px solid var(--bright-red);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-gv {
+            background-color: var(--accent-yellow);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-gv:hover {
+            background-color: #f57f17;
+            color: #fff;
+        }
+
+        /* NAVIGATION TABS */
+        nav {
+            background-color: var(--secondary-blue);
+            display: flex;
+            overflow-x: auto;
+        }
+
+        nav button {
+            background-color: transparent;
+            color: var(--white);
+            border: none;
+            padding: 12px 18px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        nav button:hover {
+            background-color: var(--accent-yellow);
+            color: var(--dark-text);
+        }
+
+        nav button.active {
+            background-color: var(--bright-red);
+            color: var(--white);
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--white);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 2px solid var(--border-color);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* HEADINGS & TEXT */
+        h2 {
+            color: var(--secondary-blue);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: var(--primary-blue);
+            margin: 15px 0 10px 0;
+        }
+
+        /* VISUAL FLOW & BOXES */
+        .theory-box {
+            background-color: var(--light-yellow);
+            border-left: 5px solid var(--accent-yellow);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .alert-box {
+            background-color: #ffebee;
+            border-left: 5px solid var(--bright-red);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            color: #b71c1c;
+        }
+
+        /* INTERACTIVE SIMULATORS */
+        .sim-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .sim-grid { grid-template-columns: 1fr; }
+        }
+
+        .sim-card {
+            background: #f0f9ff;
+            border: 1px solid var(--primary-blue);
+            border-radius: 6px;
+            padding: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        .btn-red {
+            background-color: var(--bright-red);
+        }
+
+        .btn-red:hover {
+            background-color: #d50000;
+        }
+
+        .btn-green {
+            background-color: var(--success-green);
+        }
+
+        .btn-green:hover {
+            background-color: #1b5e20;
+        }
+
+        .result-panel {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .pass {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+
+        .fail {
+            background-color: #ffebee;
+            color: var(--bright-red);
+            border: 1px solid #ffcdd2;
+        }
+
+        /* TABLES */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #b2dfdb;
+        }
+
+        th {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 8px;
+            text-align: left;
+        }
+
+        td {
+            padding: 8px;
+            background-color: #fff;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f4fbfd;
+        }
+
+        /* EXERCISE ACCORDIONS */
+        .exercise-item {
+            border: 1px solid var(--border-color);
+            margin-bottom: 10px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .ex-title {
+            background-color: var(--light-yellow);
+            padding: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ex-title:hover {
+            background-color: var(--accent-yellow);
+        }
+
+        .ex-content {
+            display: none;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* TAB KIỂM TRA STYLES */
+        .student-info-box {
+            background-color: #e3f2fd;
+            border: 2px solid var(--primary-blue);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .student-info-box { grid-template-columns: 1fr; }
+        }
+
+        .exam-item {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            background-color: #fafafa;
+        }
+
+        .exam-item h4 {
+            color: var(--secondary-blue);
+            margin-bottom: 8px;
+        }
+
+        .answer-box {
+            width: 100%;
+            min-height: 80px;
+            margin-top: 8px;
+            padding: 8px;
+            border: 1px solid #bbb;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        .gv-solution {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--success-green);
+            color: #1b5e20;
+            font-size: 0.95rem;
+        }
+
+        .pdf-export-controls {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: #ffffffd9;
+            backdrop-filter: blur(5px);
+            padding: 12px;
+            border-radius: 6px;
+            border: 2px solid var(--accent-yellow);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* MODAL KHÓA GV */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* KHUNG IN PDF TRANG A4 - TAB THỰC HÀNH C/O */
+        .a4-preview-container {
+            background: #e0e0e0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+
+        .a4-page {
+            background: #fff;
+            width: 190mm; /* Tối ưu kích thước khổ chuẩn để không ngắt trang */
+            min-height: 270mm;
+            padding: 12mm; /* Lề chuẩn 1.2cm */
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+            font-family: "Times New Roman", Times, serif;
+            font-size: 11pt;
+            line-height: 1.2;
+            color: #000;
+            box-sizing: border-box;
+        }
+
+        .co-template-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0;
+            table-layout: fixed;
+        }
+
+        .co-template-table, .co-template-table th, .co-template-table td {
+            border: 1px solid #000 !important;
+        }
+
+        .co-template-table td, .co-template-table th {
+            padding: 6px 8px;
+            vertical-align: top;
+            background: transparent !important;
+            font-size: 10.5pt;
+            word-wrap: break-word;
+        }
+
+        .co-header {
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14pt;
+            margin-bottom: 5px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--secondary-blue);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Mô Phỏng Trực Quan: Xuất Xứ & Phân Loại Hàng Hóa</h1>
+        <div class="header-right">
+            <span style="background: var(--accent-yellow); color: #000; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8rem;">Chương 3 - Hải Quan</span>
+            <button class="btn-gv" onclick="openGVModal()"> </button>
+        </div>
+    </header>
+
+    <nav>
+        <button class="nav-btn active" onclick="openTab('overview', event)">1. Khái Niệm & Phân Loại</button>
+        <button class="nav-btn" onclick="openTab('ctc', event)">2. Quy Tắc CTC</button>
+        <button class="nav-btn" onclick="openTab('rvc', event)">3. Tính Toán RVC</button>
+        <button class="nav-btn" onclick="openTab('gri', event)">4. 6 Quy Tắc GRI (HS)</button>
+        <button class="nav-btn" onclick="openTab('exercises', event)">5. Ngân Hàng Bài Tập (1-10)</button>
+        <button class="nav-btn" style="background-color: #2e7d32; color: white;" onclick="openTab('co-practice', event)">7. Thực Hành Lập C/O</button>
+        <button class="nav-btn" style="background-color: #d81b60; color: white;" onclick="openTab('exam', event)">6. Bài Kiểm Tra (30 Bài)</button>
+    </nav>
+
+    <div class="container">
+
+        <!-- TAB 1: KHÁI NIỆM & PHÂN LOẠI -->
+        <div id="overview" class="tab-content active">
+            <h2>2.2 Xuất Xứ Hàng Hóa & C/O</h2>
+            <div class="theory-box">
+                <strong>Khái niệm:</strong> Xuất xứ là nơi hàng hóa được sản xuất, chế biến và chịu trách nhiệm xác định quyền lợi thuế quan ưu đãi, rào cản thương mại, nhãn mác, thống kê.
+            </div>
+
+            <div class="sim-grid">
+                <div class="sim-card">
+                    <h3>1. Xuất xứ Thuần túy (WO - Wholly Obtained)</h3>
+                    <p>Hàng hóa hoàn toàn được tạo ra hoặc khai thác tại 01 quốc gia duy nhất.</p>
+                    <ul style="margin-left: 20px; margin-top: 8px;">
+                        <li>Khoáng sản khai thác tại nội địa.</li>
+                        <li>Nông sản trồng & thu hoạch trong nước.</li>
+                        <li>Động vật sống sinh ra và nuôi dưỡng trong nước.</li>
+                    </ul>
+                </div>
+                <div class="sim-card">
+                    <h3>2. Xuất xứ Không thuần túy (Non-WO)</h3>
+                    <p>Hàng hóa được sản xuất từ nguyên liệu/linh kiện nhập khẩu từ nhiều nền kinh tế. Phải tuân thủ các quy tắc FTA:</p>
+                    <ul style="margin-left: 20px; margin-top: 8px;">
+                        <li><strong style="color:var(--bright-red)">CTC:</strong> Chuyển đổi mã số hàng hóa.</li>
+                        <li><strong style="color:var(--bright-red)">RVC:</strong> Hàm lượng giá trị khu vực.</li>
+                        <li><strong style="color:var(--bright-red)">SP:</strong> Công đoạn gia công chế biến cụ thể.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 style="margin-top:20px;">Chứng Từ Xác Nhận Xuất Xứ (C/O) Phổ Biến</h3>
+            <table>
+                <tr>
+                    <th>Mẫu C/O (Form)</th>
+                    <th>Hiệp Định Tương Ứng (FTA)</th>
+                    <th>Hình Thức Chứng Nhận</th>
+                </tr>
+                <tr>
+                    <td><strong>Form D</strong></td>
+                    <td>ATIGA (Nội khối ASEAN)</td>
+                    <td>Cơ quan có thẩm quyền cấp</td>
+                </tr>
+                <tr>
+                    <td><strong>Form E</strong></td>
+                    <td>ACFTA (ASEAN - Trung Quốc)</td>
+                    <td>Cơ quan có thẩm quyền cấp</td>
+                </tr>
+                <tr>
+                    <td><strong>Form EUR.1</strong></td>
+                    <td>EVFTA (Việt Nam - EU)</td>
+                    <td>Cấp/Tự chứng nhận theo hạn mức</td>
+                </tr>
+                <tr>
+                    <td><strong>C/O CPTPP</strong></td>
+                    <td>CPTPP</td>
+                    <td>Tự chứng nhận xuất xứ (Self-Certification)</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- TAB 2: QUY TẮC CTC -->
+        <div id="ctc" class="tab-content">
+            <h2>2.2.3.1 Quy Tắc Chuyển Đổi Mã Số Hàng Hóa (CTC)</h2>
+            <div class="theory-box">
+                Yêu cầu mã số HS của <strong>Thành phẩm</strong> phải khác biệt so với mã số HS của <strong>Nguyên liệu nhập khẩu (Non-originating)</strong> ở các cấp độ quy định.
+            </div>
+
+            <div class="sim-grid">
+                <div class="sim-card">
+                    <h3>Mô Phỏng Trực Quan Quy Tắc CTC</h3>
+                    <div class="form-group">
+                        <label>Tiêu chí CTC áp dụng:</label>
+                        <select id="ctc-type">
+                            <option value="CC">CC (Change of Chapter - Thay đổi 2 số/Chương)</option>
+                            <option value="CTH">CTH (Change of Tariff Heading - Thay đổi 4 số/Nhóm)</option>
+                            <option value="CTSH">CTSH (Change of Subheading - Thay đổi 6 số/Phân nhóm)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Mã HS Nguyên liệu Nhập khẩu:</label>
+                        <input type="text" id="hs-input" value="0808.10" placeholder="Ví dụ: 0808.10 (Táo tươi)">
+                    </div>
+                    <div class="form-group">
+                        <label>Mã HS Thành phẩm:</label>
+                        <input type="text" id="hs-output" value="2009.71" placeholder="Ví dụ: 2009.71 (Nước táo ép)">
+                    </div>
+                    <button class="btn" onclick="checkCTC()">Kiểm Tra Điều Kiện CTC</button>
+                    <div id="ctc-result" class="result-panel" style="display:none;"></div>
+                </div>
+
+                <div class="sim-card">
+                    <h3>Bảng Minh Họa Cấp Độ Mã HS</h3>
+                    <table>
+                        <tr>
+                            <th>Cấp Độ</th>
+                            <th>Mức Thay Đổi</th>
+                            <th>Ví Dụ Chuyển Đổi</th>
+                        </tr>
+                        <tr>
+                            <td><strong>CC</strong></td>
+                            <td>2 chữ số đầu</td>
+                            <td>Bông (Chương 52) → Áo (Chương 62)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CTH</strong></td>
+                            <td>4 chữ số đầu</td>
+                            <td>Nhựa nguyên sinh (3901) → Chai nhựa (3923)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CTSH</strong></td>
+                            <td>6 chữ số đầu</td>
+                            <td>Thép tấm (7208) → Bu lông (7318)</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: TÍNH TOÁN RVC -->
+        <div id="rvc" class="tab-content">
+            <h2>2.2.3.2 Hàm Lượng Giá Trị Khu Vực (RVC)</h2>
+            <div class="theory-box">
+                Công thức Gián tiếp (Indirect Method):
+                <div style="font-size:1.2rem; text-align:center; margin:10px 0; color:var(--bright-red); font-weight:bold;">
+                    RVC = [ (FOB - VNM) / FOB ] × 100%
+                </div>
+                <em>Trong đó: FOB là Giá xuất khẩu; VNM là Giá trị nguyên liệu không có xuất xứ (Non-originating).</em>
+            </div>
+
+            <div class="sim-grid">
+                <div class="sim-card">
+                    <h3>Máy Tính RVC Trực Quan</h3>
+                    <div class="form-group">
+                        <label>Giá FOB Xuất Khẩu (USD):</label>
+                        <input type="number" id="rvc-fob" value="100">
+                    </div>
+                    <div class="form-group">
+                        <label>Tổng giá trị nguyên liệu NK/không rõ nguồn gốc - VNM (USD):</label>
+                        <input type="number" id="rvc-vnm" value="40">
+                    </div>
+                    <div class="form-group">
+                        <label>Mức RVC tối thiểu theo FTA yêu cầu (%):</label>
+                        <input type="number" id="rvc-threshold" value="40">
+                    </div>
+                    <button class="btn btn-red" onclick="calculateRVC()">Tính Tỷ Lệ RVC & Kết Luận</button>
+                    <div id="rvc-result" class="result-panel" style="display:none;"></div>
+                </div>
+
+                <div class="sim-card">
+                    <h3>Mức RVC Tham Chiếu Theo FTA</h3>
+                    <table>
+                        <tr>
+                            <th>Hiệp Định</th>
+                            <th>Mức RVC Phổ Biến</th>
+                        </tr>
+                        <tr>
+                            <td><strong>ATIGA (Form D)</strong></td>
+                            <td>≥ 40%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ACFTA (Form E)</strong></td>
+                            <td>≥ 40%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CPTPP</strong></td>
+                            <td>40% – 45% (Tùy phương pháp)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EVFTA</strong></td>
+                            <td>Tùy theo PSR từng mặt hàng</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: 6 QUY TẮC GRI -->
+        <div id="gri" class="tab-content">
+            <h2>2.3.3 Sáu Quy Tắc Giải Thích Tổng Quát (GRI)</h2>
+            <div class="alert-box">
+                <strong>Nguyên tắc cốt lõi:</strong> Áp dụng lần lượt từ GRI 1 đến GRI 6. Chỉ chuyển sang quy tắc tiếp theo khi không thể phân loại theo quy tắc trước đó.
+            </div>
+
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                <div class="sim-card">
+                    <h3>GRI 1: Tên Nhóm & Chú Giải</h3>
+                    <p>Phân loại theo tên gọi cụ thể của Phần, Chương, Nhóm và Chú giải tương ứng. Là quy tắc quan trọng nhất.</p>
+                    <p><em>VD: Ghế gỗ gia đình → Nhóm 94.01.</em></p>
+                </div>
+                <div class="sim-card">
+                    <h3>GRI 2: Chưa Hoàn Chỉnh & Hỗn Hợp</h3>
+                    <p><strong>2(a):</strong> Chưa hoàn chỉnh nhưng có đặc trưng cơ bản sản phẩm hoàn chỉnh.</p>
+                    <p><strong>2(b):</strong> Hỗn hợp vật liệu (dẫn chiếu sang GRI 3).</p>
+                </div>
+                <div class="sim-card">
+                    <h3>GRI 3: Nhiều Nhóm Mô Tả</h3>
+                    <p><strong>3(a):</strong> Nhóm cụ thể nhất.</p>
+                    <p><strong>3(b):</strong> Xác định theo đặc trưng cơ bản.</p>
+                    <p><strong>3(c):</strong> Nhóm có thứ tự sau cùng.</p>
+                </div>
+                <div class="sim-card">
+                    <h3>GRI 4: Hàng Giống Nhất</h3>
+                    <p>Phân loại theo hàng hóa giống hoặc tương tự nhất khi không áp dụng được GRI 1, 2, 3.</p>
+                </div>
+                <div class="sim-card">
+                    <h3>GRI 5: Bao Bì, Vỏ Chứa</h3>
+                    <p><strong>5(a):</strong> Vỏ đựng chuyên dụng, dùng lâu dài (hộp đàn) → phân loại cùng hàng.</p>
+                    <p><strong>5(b):</strong> Bao bì thông thường.</p>
+                </div>
+                <div class="sim-card">
+                    <h3>GRI 6: Cấp Phân Nhóm (6 Số)</h3>
+                    <p>Phân loại ở cấp độ phân nhóm dựa trên tên phân nhóm và chú giải phân nhóm liên quan.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: BÀI TẬP THỰC HÀNH -->
+        <div id="exercises" class="tab-content">
+            <h2>Ngân Hàng Bài Tập Thực Hành (Chương 3)</h2>
+            <p style="margin-bottom:15px;">Nhấp vào câu hỏi để xem hướng dẫn giải & đáp án chi tiết:</p>
+
+            <div id="exercise-container">
+                <div class="exercise-item">
+                    <div class="ex-title" onclick="toggleEx(1)">
+                        <span>Bài 1: Tính RVC cho Sản phẩm Giày (ATIGA)</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="ex-content" id="ex-1">
+                        <p><strong>Đề bài:</strong> FOB = 30 USD, Nguyên liệu nhập khẩu không có xuất xứ = 10 USD, Gia công nội địa = 7 USD. Ngưỡng RVC ATIGA = 40%. Hỏi hàng có đủ điều kiện không?</p>
+                        <hr style="margin:10px 0;">
+                        <p><strong>Lời giải:</strong></p>
+                        <p>Áp dụng công thức gián tiếp: RVC = [ (30 - 10) / 30 ] × 100% = 66.67%.</p>
+                        <p>Do 66.67% ≥ 40% → <strong>Hàng ĐỦ ĐIỀU KIỆN hưởng ưu đãi theo ATIGA.</strong></p>
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <div class="ex-title" onclick="toggleEx(2)">
+                        <span>Bài 2: Tra cứu mã HS 6 số cho 5 mặt hàng</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="ex-content" id="ex-2">
+                        <p><strong>Đáp án tra cứu tham chiếu (6 số):</strong></p>
+                        <ol style="margin-left:20px;">
+                            <li>Điện thoại di động: <strong>8517.13</strong> hoặc <strong>8517.14</strong></li>
+                            <li>Cà phê hòa tan: <strong>2101.11</strong></li>
+                            <li>Quần jeans cotton: <strong>6203.42</strong></li>
+                            <li>Máy xay sinh tố gia đình: <strong>8509.40</strong></li>
+                            <li>Đèn LED chiếu sáng: <strong>8539.52</strong></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <div class="ex-title" onclick="toggleEx(3)">
+                        <span>Bài 3: Phân tích nguồn gốc nguyên liệu cho sản phẩm X (EVFTA)</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="ex-content" id="ex-3">
+                        <p><strong>Đề bài:</strong> Nguyên liệu: China (40%), ASEAN (35%), Nội địa (25%). FTA mục tiêu: EVFTA (RVC ≥ 40%).</p>
+                        <hr style="margin:10px 0;">
+                        <p><strong>Giải đáp & Thảo luận:</strong></p>
+                        <p>1. Trong EVFTA, nguyên liệu từ China (40%) và ASEAN (35%) đều là nguyên liệu KHÔNG CÓ XUẤT XỨ (VNM = 75%). Tỷ lệ giá trị nội địa chỉ có 25%.</p>
+                        <p>2. RVC (Gián tiếp) = 100% - 75% = 25% < 40% → <strong>KHÔNG ĐẠT EVFTA.</strong></p>
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <div class="ex-title" onclick="toggleEx(4)">
+                        <span>Bài 4: Phân loại mã HS 8 số (Cty An Bình)</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="ex-content" id="ex-4">
+                        <table>
+                            <tr><th>STT</th><th>Tên hàng</th><th>Mã HS 8 Số</th><th>Giải thích (Quy tắc GRI)</th></tr>
+                            <tr><td>1</td><td>Bột vitamin tổng hợp bổ sung thức ăn gia súc</td><td>2309.90.20</td><td>Áp dụng GRI 1: Chế phẩm dùng trong nuôi dưỡng động vật (Nhóm 23.09).</td></tr>
+                            <tr><td>2</td><td>Kem đánh răng trẻ em (hương dâu)</td><td>3306.10.10</td><td>Áp dụng GRI 1: Chế phẩm vệ sinh răng miệng (Nhóm 33.06).</td></tr>
+                            <tr><td>3</td><td>Trà túi lọc nhân sâm</td><td>2106.90.99</td><td>Áp dụng GRI 3(b) hoặc GRI 1 chú giải 21.06 (Chế phẩm thực phẩm khác).</td></tr>
+                            <tr><td>4</td><td>Máy massage cầm tay gia đình</td><td>9019.10.10</td><td>Áp dụng GRI 1: Thiết bị xoa bóp/massage (Nhóm 90.19).</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <div class="ex-title" onclick="toggleEx(5)">
+                        <span>Bài 5: Xác định mã HS 8 số (Cty Minh Phát)</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="ex-content" id="ex-5">
+                        <ol style="margin-left:20px;">
+                            <li>Gel rửa tay khô có cồn (500ml): <strong>3808.94.90</strong></li>
+                            <li>Nước rửa chén dạng lỏng (hương chanh): <strong>3402.50.10</strong></li>
+                            <li>Bánh kẹo bổ sung collagen (dạng dẻo): <strong>1704.90.20</strong></li>
+                            <li>Bột nghệ nguyên chất làm gia vị: <strong>0910.30.00</strong></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <div class="ex-title" onclick="toggleEx(6)">
+                        <span>Bài 6: Xác định mã HS 8 số (Cty Thực Phẩm Xanh)</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="ex-content" id="ex-6">
+                        <ol style="margin-left:20px;">
+                            <li>Hạt giống cà chua dùng gieo trồng: <strong>1209.91.10</strong></li>
+                            <li>Chế phẩm khoáng premix thức ăn chăn nuôi: <strong>2309.90.20</strong></li>
+                            <li>Trà túi lọc nhân sâm: <strong>2106.90.99</strong></li>
+                            <li>Bột vitamin bổ sung thức ăn gia súc: <strong>2309.90.20</strong></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <div class="ex-title" onclick="toggleEx(7)">
+                        <span>Bài 7: Phân tích tiêu chí CTC cho Hiệp Định VJEPA</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="ex-content" id="ex-7">
+                        <table>
+                            <tr><th>Mặt hàng</th><th>Tiêu chí</th><th>So sánh Mã HS</th><th>Kết luận</th></tr>
+                            <tr><td>A: Nước táo</td><td>CC</td><td>Nguyên liệu (Chương 08, 17) vs Thành phẩm (Chương 20)</td><td><strong style="color:green">ĐẠT</strong></td></tr>
+                            <tr><td>B: Kẹo dẻo</td><td>CTH</td><td>Nguyên liệu (21.06) vs Thành phẩm (21.06)</td><td><strong style="color:red">KHÔNG ĐẠT</strong></td></tr>
+                            <tr><td>C: Bột cà phê</td><td>CTSH</td><td>Nguyên liệu (0901.21, 2106.90) vs Thành phẩm (2101.12)</td><td><strong style="color:green">ĐẠT</strong></td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <div class="ex-title" onclick="toggleEx(8)">
+                        <span>Bài 8: Đánh giá Tiêu chí CTH (Cty Mỹ Phẩm Việt - AJCEP)</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="ex-content" id="ex-8">
+                        <ol style="margin-left:20px;">
+                            <li><strong>Kem đánh răng (33.06):</strong> <strong style="color:green">ĐẠT CTH</strong>.</li>
+                            <li><strong>Gel rửa tay (38.08):</strong> <strong style="color:red">KHÔNG ĐẠT CTH</strong>.</li>
+                            <li><strong>Máy massage (90.19):</strong> <strong style="color:green">ĐẠT CTH</strong>.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <div class="ex-title" onclick="toggleEx(9)">
+                        <span>Bài 9: Tính RVC cho Máy Massage (Cty Cơ Khí Việt Nam)</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="ex-content" id="ex-9">
+                        <p>RVC = [ (35 - 10) / 35 ] × 100% = 71.43% ≥ 40% → <strong style="color:green">ĐẠT TIÊU CHÍ RVC ĐỂ CẤP C/O FORM AJ.</strong></p>
+                    </div>
+                </div>
+
+                <div class="exercise-item">
+                    <div class="ex-title" onclick="toggleEx(10)">
+                        <span>Bài 10: Xác định RVC Máy Hút Bụi Thông Minh (ATIGA - Form D)</span>
+                        <span>▼</span>
+                    </div>
+                    <div class="ex-content" id="ex-10">
+                        <p>RVC = [ (120 - 60) / 120 ] × 100% = 50.00% ≥ 40% → <strong style="color:green">SẢN PHẨM ĐỦ ĐIỀU KIỆN CẤP C/O FORM D.</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 7: THỰC HÀNH LẬP CHỨNG TỪ XÁC NHẬN XUẤT XỨ (C/O) -->
+        <div id="co-practice" class="tab-content">
+            <h2>7. Thực Hành Lập Chứng Từ Xác Nhận Xuất Xứ (C/O)</h2>
+            <div class="theory-box">
+                <strong>Yêu cầu C/O hợp lệ:</strong> Mẫu C/O đúng định dạng FTA, thông tin khớp hoàn toàn với Invoice/Packing List, đúng chữ ký/con dấu thẩm quyền, ngày cấp, mã HS, tiêu chí xuất xứ và số lượng khớp hợp đồng.
+            </div>
+
+            <div class="sim-grid">
+                <!-- KHU VỰC NHẬP DỮ LIỆU C/O -->
+                <div class="sim-card">
+                    <h3>Ô Nhập Liệu Thông Tin Chứng Từ Xuất Xứ</h3>
+                    <div class="form-group">
+                        <label>1. Mẫu Chứng Từ Xuất Xứ (C/O Form):</label>
+                        <select id="co-form-type" onchange="updateCOPreview()">
+                            <option value="Form D (ATIGA)">Form D (ATIGA - Nội khối ASEAN)</option>
+                            <option value="Form E (ACFTA)">Form E (ACFTA - ASEAN - Trung Quốc)</option>
+                            <option value="Form EUR.1">Form EUR.1 (EVFTA - Việt Nam - EU)</option>
+                            <option value="C/O CPTPP (Tự chứng nhận)">C/O CPTPP (Tự chứng nhận xuất xứ)</option>
+                            <option value="Form APEC">Form APEC</option>
+                            <option value="Form AK (AKFTA)">Form AK (ASEAN - Hàn Quốc)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>2. Người Xuất Khẩu (Exporter / Seller):</label>
+                        <input type="text" id="co-exporter" value="CTY TNHH XUẤT NHẬP KHẨU VIỆT NAM - 123 NGUYỄN HUỆ, TPHCM" oninput="updateCOPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label>3. Người Nhập Khẩu (Importer / Consignee):</label>
+                        <input type="text" id="co-importer" value="GLOBAL TRADING CO., LTD - SINGAPORE" oninput="updateCOPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label>4. Số & Ngày Hóa Đơn (Invoice No. & Date):</label>
+                        <input type="text" id="co-invoice" value="INV-2026-088 | Ngày: 20/08/2026" oninput="updateCOPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label>5. Tên Hàng Hóa & Mô Tả (Description of Goods):</label>
+                        <textarea id="co-description" rows="3" oninput="updateCOPreview()">Cà phê rang xay đóng gói cao cấp (Vietnamese Premium Roasted Coffee)</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>6. Mã HS (HS Code - Ít nhất 6-8 số):</label>
+                        <input type="text" id="co-hscode" value="0901.21.10" oninput="updateCOPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label>7. Tiêu Chí Xuất Xứ (Origin Criterion):</label>
+                        <select id="co-criterion" onchange="updateCOPreview()">
+                            <option value="WO (Wholly Obtained)">WO - Xuất xứ thuần túy (Wholly Obtained)</option>
+                            <option value="RVC >= 40%">RVC ≥ 40% (Hàm lượng giá trị khu vực)</option>
+                            <option value="CTH (Change of Tariff Heading)">CTH - Chuyển đổi nhóm 4 số</option>
+                            <option value="CC (Change of Chapter)">CC - Chuyển đổi chương 2 số</option>
+                            <option value="CTSH (Change of Subheading)">CTSH - Chuyển đổi phân nhóm 6 số</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>8. Số Lượng / Trọng Lượng (Quantity / Weight):</label>
+                        <input type="text" id="co-quantity" value="1,500 KGS / 100 CARTONS" oninput="updateCOPreview()">
+                    </div>
+                    <div class="form-group">
+                        <label>9. Cơ Quan Cấp / Tự Chứng Nhận (Issuing Authority):</label>
+                        <input type="text" id="co-authority" value="Phòng Quản Lý XNK Khu Vực TPHCM - Bộ Công Thương" oninput="updateCOPreview()">
+                    </div>
+                    <button class="btn btn-green" style="width: 100%; margin-top: 10px;" onclick="exportCOPDF()">Xuất Chứng Từ C/O Ra File PDF (A4)</button>
+                </div>
+
+                <!-- BẢNG MINH HỌA XUẤT XỨ -->
+                <div class="sim-card">
+                    <h3>Quy Trình & Yêu Cầu Cấp C/O Hợp Lệ</h3>
+                    <div class="theory-box" style="margin-bottom: 10px;">
+                        <strong>Quy trình cấp C/O:</strong>
+                        <ol style="margin-left: 18px; margin-top: 5px;">
+                            <li>Doanh nghiệp khai báo hồ sơ trực tuyến.</li>
+                            <li>Nộp hồ sơ cho Cơ quan cấp (Phòng QLXNK, Hiệp hội hoặc cơ quan nhà nước được ủy quyền).</li>
+                            <li>Hồ sơ gồm: Đơn đề nghị, Invoice, Packing List, Tờ khai HQ, Chứng từ chứng minh sản xuất (Bảng kê RVC/CTC).</li>
+                        </ol>
+                    </div>
+                    <div class="alert-box">
+                        <strong>Lưu ý Giảng Viên:</strong> Sinh viên sau khi nhập đầy đủ thông tin bên trái sẽ thấy bản xem trước C/O khổ A4 định dạng chuẩn phía dưới. Sau đó nhấn <strong>"Xuất Chứng Từ C/O Ra File PDF"</strong> để nộp.
+                    </div>
+                </div>
+            </div>
+
+            <!-- VÙNG XEM TRƯỚC TRANG IN C/O FORMAT A4 -->
+            <h3 style="margin-top: 25px;">Bản Xem Trước Chứng Từ Xuất Xứ A4 (Sẽ In Ra PDF)</h3>
+            <div class="a4-preview-container">
+                <div id="printable-co-area" class="a4-page">
+                    <div class="co-header" id="pv-title">CERTIFICATE OF ORIGIN - FORM D</div>
+                    <p style="text-align: center; font-style: italic; font-size: 9.5pt; margin-bottom: 12px;">(Issued in Premier Trade Simulation System - Academic Purpose)</p>
+                    
+                    <table class="co-template-table">
+                        <tr>
+                            <td style="width: 50%;">
+                                <strong>1. Goods consigned from (Exporter's name, address, country):</strong><br>
+                                <span id="pv-exporter">CTY TNHH XUẤT NHẬP KHẨU VIỆT NAM - 123 NGUYỄN HUỆ, TPHCM</span>
+                            </td>
+                            <td style="width: 50%;">
+                                <strong>Reference No:</strong> VN-SG 26/08/99821<br>
+                                <strong>CERTIFICATE OF ORIGIN</strong><br>
+                                <strong id="pv-form-tag" style="color: var(--primary-blue);">FORM D</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>2. Goods consigned to (Consignee's name, address, country):</strong><br>
+                                <span id="pv-importer">GLOBAL TRADING CO., LTD - SINGAPORE</span>
+                            </td>
+                            <td>
+                                <strong>Issued in Country:</strong> VIETNAM<br>
+                                <strong>Target Country:</strong> ASEAN MEMBER STATES
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <strong>3. Means of transport and route:</strong> BY SEA | Ocean Vessel: V.2026-SG | Port of Loading: Cat Lai, Vietnam
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="co-template-table" style="margin-top: -1px;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="width: 8%; text-align: center;">Item</th>
+                                <th style="width: 17%; text-align: center;">HS Code</th>
+                                <th style="width: 35%; text-align: center;">Description of Goods</th>
+                                <th style="width: 20%; text-align: center;">Origin Criterion</th>
+                                <th style="width: 20%; text-align: center;">Quantity / Weight</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center; padding-top: 15px; padding-bottom: 35px;">1</td>
+                                <td style="text-align: center; padding-top: 15px; padding-bottom: 35px;" id="pv-hscode">0901.21.10</td>
+                                <td style="padding-top: 15px; padding-bottom: 35px;">
+                                    <span id="pv-description-text">Cà phê rang xay đóng gói cao cấp (Vietnamese Premium Roasted Coffee)</span><br><br>
+                                    <strong>Invoice No & Date:</strong><br>
+                                    <span id="pv-invoice">INV-2026-088 | Ngày: 20/08/2026</span>
+                                </td>
+                                <td style="text-align: center; padding-top: 15px; padding-bottom: 35px;" id="pv-criterion">WO (Wholly Obtained)</td>
+                                <td style="text-align: center; padding-top: 15px; padding-bottom: 35px;" id="pv-quantity">1,500 KGS / 100 CARTONS</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="co-template-table" style="margin-top: -1px;">
+                        <tr>
+                            <td style="width: 50%; padding-bottom: 25px;">
+                                <strong>11. Declaration by the exporter:</strong><br>
+                                The undersigned hereby declares that the above-stated details and statements are correct and all goods were produced in VIETNAM.<br><br><br>
+                                <div style="text-align: center; font-style: italic;">(Authorized Signature & Stamp)</div>
+                            </td>
+                            <td style="width: 50%; padding-bottom: 25px;">
+                                <strong>12. Certification / Issuing Authority:</strong><br>
+                                It is hereby certified, on the basis of control carried out, that the declaration by the exporter is correct.<br><br>
+                                <strong>Issuing Office:</strong> <span id="pv-authority">Phòng Quản Lý XNK Khu Vực TPHCM - Bộ Công Thương</span><br>
+                                <strong>Date of Issue:</strong> 20/08/2026
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: BÀI KIỂM TRA (30 BÀI TẬP) -->
+        <div id="exam" class="tab-content">
+            <h2>Hệ Thống 30 Bài Tập Kiểm Tra Luyện Tập Chương 3</h2>
+            
+            <div class="pdf-export-controls">
+                <div>
+                    <strong>Tùy chọn Khổ Trang PDF: </strong>
+                    <select id="pdf-orientation" style="padding: 6px; border-radius: 4px; font-weight: bold;">
+                        <option value="portrait">Trang A4 Dọc (Portrait)</option>
+                        <option value="landscape">Trang A4 Ngang (Landscape)</option>
+                    </select>
+                </div>
+                <button class="btn btn-red" onclick="exportPDF()">Kết Xuất Bài Làm Ra File PDF</button>
+            </div>
+
+            <!-- VÙNG BÀI LÀM CỦA SINH VIÊN (SẼ XUẤT RA PDF) -->
+            <div id="printable-exam-area">
+                <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px;">
+                    <h2 style="border:none; margin:0; text-transform: uppercase;">BÀI LÀM KIỂM TRA CHƯƠNG 3: XUẤT XỨ & PHÂN LOẠI HÀNG HÓA</h2>
+                    <p style="font-size:0.9rem; font-style:italic;">Môn: Khai Báo Hải Quan | Thời gian thực hiện: Trực tiếp trên phần mềm</p>
+                </div>
+
+                <!-- THÔNG TIN SINH VIÊN -->
+                <div class="student-info-box">
+                    <div class="form-group" style="margin:0;">
+                        <label>Họ và Tên Sinh Viên:</label>
+                        <input type="text" id="std-name" placeholder="Nhập đầy đủ Họ tên...">
+                    </div>
+                    <div class="form-group" style="margin:0;">
+                        <label>Mã Số Sinh Viên (MSSV):</label>
+                        <input type="text" id="std-id" placeholder="Nhập MSSV...">
+                    </div>
+                    <div class="form-group" style="margin:0;">
+                        <label>Lớp / Khóa:</label>
+                        <input type="text" id="std-class" placeholder="Nhập tên Lớp...">
+                    </div>
+                </div>
+
+                <div id="exam-questions-list">
+                    <!-- 30 BÀI TẬP SẼ ĐƯỢC TỰ ĐỘNG GEN TỪ JAVASCRIPT -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MODAL BẢO MẬT DÀNH CHO GIẢNG VIÊN -->
+    <div id="gvModal" class="modal">
+        <div class="modal-content">
+            <h3 style="margin-top:0;">Đăng Nhập Giảng Viên</h3>
+            <p style="font-size:0.9rem; margin-bottom: 10px;">Vui lòng nhập Password để xem đáp án 30 bài kiểm tra:</p>
+            <input type="password" id="gvPassInput" style="width:100%; padding:8px; margin-bottom:15px; text-align:center;" placeholder="Nhập Pass...">
+            <div style="display:flex; justify-content:space-around;">
+                <button class="btn" onclick="checkGVPass()">Xác Nhận</button>
+                <button class="btn btn-red" onclick="closeGVModal()">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Phần Mềm Hỗ Trợ Giảng Dạy Môn Khai Báo Hải Quan | Chương 3: Xuất Xứ & Phân Loại Hàng Hóa</p>
+    </footer>
+
+    <script>
+        // NGÂN HÀNG 30 BÀI TẬP KIỂM TRA & ĐÁP ÁN GV
+        const examQuestions = [
+            { id: 1, title: "Bài 1: Xác định Tiêu chí Xuất xứ WO", desc: "Sản phẩm tôm hùm tươi sống được ngư dân đánh bắt tại vùng biển chủ quyền Việt Nam và tiêu thụ nội địa/xuất khẩu. Xác định tiêu chí xuất xứ phù hợp và giải thích.", ans: "Đáp án GV: Áp dụng tiêu chí WO (Wholly Obtained - Xuất xứ thuần túy) do động vật sống được sinh ra, đánh bắt tại vùng biển Việt Nam." },
+            { id: 2, title: "Bài 2: Tính Tỷ Lệ RVC theo Phương Pháp Gián Tiếp (Form D)", desc: "Áo sơ mi nam xuất khẩu có giá FOB = 25 USD. Linh kiện nút áo và chỉ may nhập khẩu từ Trung Quốc (VNM = 5 USD). Tính RVC và kết luận điều kiện C/O Form D (yêu cầu RVC ≥ 40%).", ans: "Đáp án GV: RVC = [(25 - 5) / 25] * 100% = 80%. Do 80% ≥ 40% -> ĐỦ ĐIỀU KIỆN cấp C/O Form D." },
+            { id: 3, title: "Bài 3: Phân Phối Mã HS Cấp Chương (CC)", desc: "Doanh nghiệp nhập khẩu Bông chưa chải thô (Mã HS 5201) từ Mỹ về sản xuất ra Vải dệt thoi (Mã HS 5208) tại Việt Nam. Đánh giá xem tiêu chí CC có đạt hay không?", ans: "Đáp án GV: Nguyên liệu Chương 52, Thành phẩm Chương 52 (Cùng thuộc Chương 52) -> KHÔNG ĐẠT tiêu chí CC (Change of Chapter)." },
+            { id: 4, title: "Bài 4: Phân Loại Hàng Hóa theo GRI 1", desc: "Tra cứu mã HS 4 số cho sản phẩm 'Cà phê hạt chưa rang, chưa khử cafein'. Cho biết nhóm HS phù hợp.", ans: "Đáp án GV: Nhóm 09.01 (Cà phê, đã hoặc chưa rang hoặc khử caffein...)." },
+            { id: 5, title: "Bài 5: Phân Loại Hàng Hóa Tháo Rời theo GRI 2(a)", desc: "Một chiếc xe đạp nguyên chiếc được tháo rời các bộ phận (khung, bánh xe, xích, ghi-đông) đóng chung trong 1 kiện hàng nhập khẩu. Phân loại mã HS theo nguyên tắc nào?", ans: "Đáp án GV: Áp dụng GRI 2(a) - Hàng hóa ở dạng tháo rời hoặc chưa lắp ráp có đầy đủ đặc trưng cơ bản của hàng hóa hoàn chỉnh -> Phân loại như xe đạp nguyên chiếc (Nhóm 87.12)." },
+            { id: 6, title: "Bài 6: Phân Loại Bộ Hàng Bán Lẻ theo GRI 3(b)", desc: "Bộ quà tặng gồm 1 chai rượu vang, 1 cái mở nút chai và 2 cái ly thủy tinh đóng chung trong hộp. Phân loại bộ hàng này theo mã HS nào?", ans: "Đáp án GV: Áp dụng GRI 3(b) - Phân loại theo vật phẩm tạo nên đặc trưng cơ bản của bộ hàng -> Phân loại theo Rượu vang (Nhóm 22.04)." },
+            { id: 7, title: "Bài 7: Tiêu chí CTH cho Sản Phẩm Nước Ép Trái Cây", desc: "Táo tươi nhập khẩu (HS 0808) được chế biến thành Nước táo ép (HS 2009). Đánh giá khả năng đáp ứng tiêu chí CTH (Change of Tariff Heading).", ans: "Đáp án GV: Mã HS nguyên liệu 08.08 chuyển thành mã HS thành phẩm 20.09 (Thay đổi 4 số đầu - Cấp Nhóm) -> ĐẠT tiêu chí CTH." },
+            { id: 8, title: "Bài 8: Tính Giá Trị VNM trong RVC", desc: "Giá FOB xe máy = 1.200 USD. Linh kiện NK gồm: Động cơ Nhật (500 USD có C/O AJ), Lốp xe Thái Lan (100 USD không C/O), Khung xe nhập từ Trung Quốc (200 USD). Xác định tổng giá trị VNM.", ans: "Đáp án GV: VNM = Lốp xe (100) + Khung xe (200) = 300 USD (Động cơ Nhật có C/O hợp lệ tính là Nguyên liệu có xuất xứ)." },
+            { id: 9, title: "Bài 9: Phân Loại Bao Bì Theo GRI 5(a)", desc: "Hộp đựng đàn Guitar làm bằng gỗ bọc nhung được thiết kế riêng theo hình dáng cây đàn nhập khẩu cùng với đàn Guitar. Phân loại hộp đựng đàn như thế nào?", ans: "Đáp án GV: Áp dụng GRI 5(a) - Bao bì/vỏ chứa chuyên dụng lâu dài nhập khẩu cùng sản phẩm -> Phân loại cùng mã HS với đàn Guitar (Nhóm 92.02/92.07)." },
+            { id: 10, title: "Bài 10: Phân Loại Mã HS 6 Số Của Điện Thoại Thông Minh", desc: "Xác định mã HS 6 số cho 'Điện thoại di động dùng cho mạng tế bào (Smartphones)'.", ans: "Đáp án GV: Mã HS phân nhóm 6 số: 8517.13 hoặc 8517.14." },
+            { id: 11, title: "Bài 11: Quy Tắc CTSH (Change of Subheading)", desc: "Giải thích ngắn gọn ý nghĩa của tiêu chí CTSH trong quy tắc xuất xứ ưu đãi FTA.", ans: "Đáp án GV: CTSH yêu cầu tất cả nguyên liệu không có xuất xứ (Non-originating) phải có mã HS khác với mã HS thành phẩm ở cấp độ 6 chữ số (Phân nhóm)." },
+            { id: 12, title: "Bài 12: Đánh Giá Quy Tắc Cộng Dồn (Cumulation)", desc: "Doanh nghiệp VN sử dụng 30% nguyên liệu nội địa, 20% nguyên liệu từ Malaysia (có C/O Form D) để sản xuất hàng xuất sang Thái Lan (Form D). Tỷ lệ giá trị cộng dồn ASEAN là bao nhiêu?", ans: "Đáp án GV: Tỷ lệ cộng dồn = 30% (VN) + 20% (Malaysia) = 50% nội khối ASEAN." },
+            { id: 13, title: "Bài 13: Phân Loại Hàng Hóa Theo GRI 3(c)", desc: "Khi sản phẩm có thể phân loại vào cả 2 nhóm 50.01 và 50.05 mà không áp dụng được 3(a) và 3(b), áp dụng GRI 3(c) như thế nào?", ans: "Đáp án GV: GRI 3(c) quy định phân loại hàng hóa vào nhóm có thứ tự mã số sau cùng trong số các nhóm cùng được xem xét -> Phân loại vào Nhóm 50.05." },
+            { id: 14, title: "Bài 14: Phân Biệt C/O Form E và C/O Form EUR.1", desc: "Cho biết Hiệp định thương mại tương ứng với Mẫu C/O Form E và Form EUR.1.", ans: "Đáp án GV: Form E thuộc Hiệp định ACFTA (ASEAN - Trung Quốc); Form EUR.1 thuộc Hiệp định EVFTA (Việt Nam - EU)." },
+            { id: 15, title: "Bài 15: Tính RVC Trực Tiếp (Direct Method)", desc: "Cho Chi phí nguyên liệu ASEAN = 40 USD, Chi phí nhân công = 10 USD, Lợi nhuận = 10 USD, Giá FOB = 100 USD. Tính RVC Trực tiếp.", ans: "Đáp án GV: RVC Direct = [(40 + 10 + 10) / 100] * 100% = 60%." },
+            { id: 16, title: "Bài 16: Phân Loại Bánh Kẹo Bổ Sung Collagen", desc: "Xác định mã HS 4 số cho sản phẩm kẹo mềm bọc đường có bổ sung vi chất collagen.", ans: "Đáp án GV: Nhóm 17.04 (Các loại kẹo đường không chứa cacao)." },
+            { id: 17, title: "Bài 17: Phân Loại Máy Massage Cầm Tay", desc: "Xác định nhóm mã HS 4 số cho máy massage dùng điện cầm tay dùng cho gia đình.", ans: "Đáp án GV: Nhóm 90.19 (Thiết bị trị liệu cơ học, máy xoa bóp/massage...)." },
+            { id: 18, title: "Bài 18: Tiêu Chí SP (Specific Process)", desc: "Nêu khái niệm cơ bản về tiêu chí SP trong Quy tắc xuất xứ.", ans: "Đáp án GV: SP (Specific Process - Công đoạn gia công chế biến cụ thể) yêu cầu nguyên liệu phải trải qua một công đoạn sản xuất đặc thù quy định (VD: Cắt, may hoàn thiện đối với dệt may)." },
+            { id: 19, title: "Bài 19: Phân Loại Gel Rửa Tay Khô Có Cồn", desc: "Gel rửa tay diệt khuẩn chứa 70% cồn đóng chai 500ml dùng vệ sinh cá nhân phân loại nhóm HS nào?", ans: "Đáp án GV: Nhóm 38.08 (Chế phẩm khử trùng/diệt khuẩn) hoặc Nhóm 33.07." },
+            { id: 20, title: "Bài 20: Phân Loại Thức Ăn Gia Súc Premix", desc: "Chế phẩm premix khoáng vi lượng dùng trong phối trộn thức ăn chăn nuôi gia súc thuộc nhóm HS nào?", ans: "Đáp án GV: Nhóm 23.09 (Các chế phẩm dùng trong nuôi dưỡng động vật)." },
+            { id: 21, title: "Bài 21: Phân Loại Hạt Giống Nông Nghiệp", desc: "Hạt giống cà chua đóng gói bao bì chuyên dụng dùng để gieo trồng phân loại vào nhóm HS nào?", ans: "Đáp án GV: Nhóm 12.09 (Hạt, quả và mầm dùng để gieo trồng)." },
+            { id: 22, title: "Bài 22: Phân Loại Máy Xay Sinh Tố Gia Đình", desc: "Máy xay sinh tố có động cơ điện gắn liền dùng cho gia đình phân loại nhóm HS nào?", ans: "Đáp án GV: Nhóm 85.09 (Thiết bị cơ điện gia dụng có động cơ điện gắn liền)." },
+            { id: 23, title: "Bài 23: Phân Loại Đèn LED chiếu sáng", desc: "Bóng đèn LED chiếu sáng gia đình dạng búp thuộc nhóm HS nào?", ans: "Đáp án GV: Nhóm 85.39 (Bóng đèn đi-ốt phát quang - LED)." },
+            { id: 24, title: "Bài 24: Tính RVC Sản Phẩm Giày Da", desc: "Giá FOB đôi giày = 50 USD. Giá trị da thuộc NK từ Ý = 25 USD, đế cao su NK Hàn Quốc = 10 USD. Tính RVC gián tiếp và kết luận theo mốc 40%.", ans: "Đáp án GV: VNM = 25 + 10 = 35 USD. RVC = [(50 - 35) / 50] * 100% = 30%. Do 30% < 40% -> KHÔNG ĐẠT tiêu chí RVC 40%." },
+            { id: 25, title: "Bài 25: Phân Loại Quần Jeans Cotton", desc: "Quần dài dệt thoi cho nam từ 100% sợi cotton phân loại nhóm HS nào?", ans: "Đáp án GV: Nhóm 62.03 (Quần áo dệt thoi cho nam giới)." },
+            { id: 26, title: "Bài 26: Phân Loại Rượu Nho Có Độ Cồn > 15%", desc: "Rượu vang lên men từ nho tươi đóng chai 750ml thuộc nhóm HS nào?", ans: "Đáp án GV: Nhóm 22.04 (Rượu vang làm từ nho tươi)." },
+            { id: 27, title: "Bài 27: Phân Loại Xe Đàn Piano Cơ", desc: "Đàn Piano cơ dạng đứng (Upright Piano) thuộc nhóm HS nào?", ans: "Đáp án GV: Nhóm 92.01 (Đàn piano, đàn dây có bàn phím)." },
+            { id: 28, title: "Bài 28: Đánh Giá Tiêu Chí De Minimis", desc: "Tiêu chí De Minimis (Tỷ lệ linh hoạt) cho phép điều gì đối với nguyên liệu không đáp ứng CTC?", ans: "Đáp án GV: Cho phép một tỷ lệ nhỏ nguyên liệu không đáp ứng CTC (thường không quá 10% giá trị hoặc trọng lượng) mà sản phẩm vẫn được công nhận xuất xứ." },
+            { id: 29, title: "Bài 29: Phân Loại Máy Hút Bụi Thông Minh", desc: "Robot hút bụi tự động có động cơ điện dùng trong gia đình thuộc nhóm HS nào?", ans: "Đáp án GV: Nhóm 85.08 (Máy hút bụi có động cơ điện gắn liền)." },
+            { id: 30, title: "Bài 30: Phân Loại Kem Đánh Răng", desc: "Kem đánh răng ngừa sâu răng đóng tuýp 150g bán lẻ thuộc nhóm HS nào?", ans: "Đáp án GV: Nhóm 33.06 (Chế phẩm vệ sinh răng hoặc miệng)." }
+        ];
+
+        // RENDER DANH SÁCH 30 BÀI TẬP VÀO TAB KIỂM TRA
+        function renderExamQuestions() {
+            const container = document.getElementById('exam-questions-list');
+            container.innerHTML = '';
+            examQuestions.forEach((q) => {
+                const item = document.createElement('div');
+                item.className = 'exam-item';
+                item.innerHTML = `
+                    <h4>${q.title}</h4>
+                    <p style="font-size:0.95rem; margin-bottom:6px;"><strong>Đề bài:</strong> ${q.desc}</p>
+                    <label style="font-size:0.85rem; font-weight:bold;">Bài làm của sinh viên:</label>
+                    <textarea class="answer-box" id="ans-${q.id}" placeholder="Nhập câu trả lời / Lời giải chi tiết tại đây..."></textarea>
+                    <div class="gv-solution" id="sol-${q.id}">${q.ans}</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // CẬP NHẬT TRỰC TIẾP BẢN XEM TRƯỚC C/O
+        function updateCOPreview() {
+            const formType = document.getElementById('co-form-type').value;
+            document.getElementById('pv-title').innerText = "CERTIFICATE OF ORIGIN - " + formType.toUpperCase();
+            document.getElementById('pv-form-tag').innerText = formType;
+            document.getElementById('pv-exporter').innerText = document.getElementById('co-exporter').value;
+            document.getElementById('pv-importer').innerText = document.getElementById('co-importer').value;
+            document.getElementById('pv-invoice').innerText = document.getElementById('co-invoice').value;
+            document.getElementById('pv-description-text').innerHTML = document.getElementById('co-description').value.replace(/\n/g, '<br>');
+            document.getElementById('pv-hscode').innerText = document.getElementById('co-hscode').value;
+            document.getElementById('pv-criterion').innerText = document.getElementById('co-criterion').value;
+            document.getElementById('pv-quantity').innerText = document.getElementById('co-quantity').value;
+            document.getElementById('pv-authority').innerText = document.getElementById('co-authority').value;
+        }
+
+        // XUẤT FILE C/O RA PDF TRANG A4 (ĐÃ ĐƯỢC CẢI TIẾN TRÁNH TRÀN TRANG/MẤT CHỮ)
+        function exportCOPDF() {
+            // Cập nhật lại dữ liệu mới nhất trước khi render
+            updateCOPreview();
+
+            const element = document.getElementById('printable-co-area');
+            const formType = document.getElementById('co-form-type').value;
+
+            const opt = {
+                margin:       [10, 10, 10, 10], // Lề 1cm đảm bảo không ngắt trang
+                filename:     `Chung_Tu_Xuat_Xu_${formType.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2,
+                    useCORS: true,
+                    windowWidth: 1024 // Đảm bảo canvas render trọn vẹn bề ngang
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        }
+
+        // TỰ ĐỘNG KHỞI TẠO BÀI KIỂM TRA & C/O PREVIEW
+        window.addEventListener('DOMContentLoaded', () => {
+            renderExamQuestions();
+            updateCOPreview();
+        });
+
+        // NAVIGATION TABS
+        function openTab(tabId, evt) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add('active');
+            }
+        }
+
+        // ACCORDION FOR EXERCISES
+        function toggleEx(id) {
+            const el = document.getElementById('ex-' + id);
+            if (el.style.display === "block") {
+                el.style.display = "none";
+            } else {
+                el.style.display = "block";
+            }
+        }
+
+        // CTC SIMULATOR LOGIC
+        function checkCTC() {
+            const type = document.getElementById('ctc-type').value;
+            const hsIn = document.getElementById('hs-input').value.replace(/\./g, '').trim();
+            const hsOut = document.getElementById('hs-output').value.replace(/\./g, '').trim();
+            const resultBox = document.getElementById('ctc-result');
+
+            if (hsIn.length < 6 || hsOut.length < 6) {
+                alert('Vui lòng nhập mã HS đúng 6 chữ số!');
+                return;
+            }
+
+            resultBox.style.display = "block";
+            let isPass = false;
+            let msg = "";
+
+            if (type === "CC") {
+                isPass = (hsIn.substring(0, 2) !== hsOut.substring(0, 2));
+                msg = isPass ? "ĐẠT QUY TẮC CC (Đã thay đổi 2 số đầu - Cấp Chương)" : "KHÔNG ĐẠT CC (Trùng 2 số đầu - Cấp Chương)";
+            } else if (type === "CTH") {
+                isPass = (hsIn.substring(0, 4) !== hsOut.substring(0, 4));
+                msg = isPass ? "ĐẠT QUY TẮC CTH (Đã thay đổi 4 số đầu - Cấp Nhóm)" : "KHÔNG ĐẠT CTH (Trùng 4 số đầu - Cấp Nhóm)";
+            } else if (type === "CTSH") {
+                isPass = (hsIn.substring(0, 6) !== hsOut.substring(0, 6));
+                msg = isPass ? "ĐẠT QUY TẮC CTSH (Đã thay đổi 6 số - Cấp Phân nhóm)" : "KHÔNG ĐẠT CTSH (Trùng 6 số - Cấp Phân nhóm)";
+            }
+
+            resultBox.className = "result-panel " + (isPass ? "pass" : "fail");
+            resultBox.innerHTML = `<strong>Kết quả: ${msg}</strong><br>Mã nguyên liệu: ${hsIn} | Mã thành phẩm: ${hsOut}`;
+        }
+
+        // RVC CALCULATOR LOGIC
+        function calculateRVC() {
+            const fob = parseFloat(document.getElementById('rvc-fob').value);
+            const vnm = parseFloat(document.getElementById('rvc-vnm').value);
+            const threshold = parseFloat(document.getElementById('rvc-threshold').value);
+            const resultBox = document.getElementById('rvc-result');
+
+            if (isNaN(fob) || isNaN(vnm) || fob <= 0) {
+                alert('Vui lòng nhập giá trị hợp lệ!');
+                return;
+            }
+
+            const rvc = ((fob - vnm) / fob) * 100;
+            const isPass = rvc >= threshold;
+
+            resultBox.style.display = "block";
+            resultBox.className = "result-panel " + (isPass ? "pass" : "fail");
+            resultBox.innerHTML = `
+                Tỷ lệ RVC tính được: <strong>${rvc.toFixed(2)}%</strong><br>
+                Yêu cầu ngưỡng: <strong>${threshold}%</strong><br>
+                <strong>KẾT LUẬN: ${isPass ? 'ĐỦ ĐIỀU KIỆN ĐẠT XUẤT XỨ (ĐƯỢC HƯỞNG ƯU ĐÃI)' : 'KHÔNG ĐẠT ĐIỀU KIỆN XUẤT XỨ'}</strong>
+            `;
+        }
+
+        // BẢO MẬT GIẢNG VIÊN (PASS: CDCT@1976)
+        function openGVModal() {
+            document.getElementById('gvModal').style.display = 'flex';
+        }
+
+        function closeGVModal() {
+            document.getElementById('gvModal').style.display = 'none';
+            document.getElementById('gvPassInput').value = '';
+        }
+
+        function checkGVPass() {
+            const pass = document.getElementById('gvPassInput').value;
+            if (pass === "CDCT@1976") {
+                alert("Xác thực Giảng viên thành công! Đáp án 30 bài tập kiểm tra đã mở.");
+                closeGVModal();
+                showGVSolutions();
+                openTab('exam');
+            } else {
+                alert("Mật khẩu không chính xác!");
+            }
+        }
+
+        function showGVSolutions() {
+            const solutions = document.querySelectorAll('.gv-solution');
+            solutions.forEach(sol => {
+                sol.style.display = 'block';
+            });
+        }
+
+        // XUẤT FILE PDF A4 CHO BÀI KIỂM TRA 30 CÂU
+        function exportPDF() {
+            const stdName = document.getElementById('std-name').value.trim();
+            const stdId = document.getElementById('std-id').value.trim();
+
+            if (!stdName || !stdId) {
+                alert('Vui lòng nhập đầy đủ Họ Tên và Mã Số Sinh Viên trước khi xuất PDF!');
+                document.getElementById('std-name').focus();
+                return;
+            }
+
+            const element = document.getElementById('printable-exam-area');
+            const orientation = document.getElementById('pdf-orientation').value;
+
+            const opt = {
+                margin:       10,
+                filename:     `Bai_Lam_Kiem_Tra_Chuong3_${stdId}_${stdName.replace(/\s+/g, '_')}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: orientation }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
