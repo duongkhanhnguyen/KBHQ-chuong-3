@@ -434,6 +434,22 @@
             margin-bottom: 5px;
         }
 
+
+        /* TAB 8: THỰC HÀNH TÍNH TOÁN */
+        .lab-step{border:1px solid var(--primary-blue);border-radius:6px;margin:14px 0;overflow:hidden;background:#fff}
+        .lab-step>h3{margin:0;background:var(--primary-blue);color:#fff;padding:8px 12px;font-size:1rem}
+        .lab-step>div{padding:12px}
+        .lab-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+        .lab-table{display:block;overflow-x:auto}
+        .lab-table select{width:100%;padding:4px}
+        .lab-check li{list-style:none;margin:3px 0}
+        .lab-page{width:190mm;background:#fff;color:#000;font-family:"Times New Roman",Times,serif;font-size:11pt;line-height:1.3;padding:4mm}
+        .lab-page table{border:1px solid #000;margin:6px 0;width:100%}
+        .lab-page th,.lab-page td{border:1px solid #000;padding:3px 5px;font-size:10pt;background:#fff!important;color:#000;text-align:left;vertical-align:top}
+        .lab-page th{background:#eee!important}
+        .lab-page h4{margin:10px 0 3px;text-transform:uppercase;font-size:11pt}
+        .lab-pre{white-space:pre-wrap;border:1px solid #000;padding:5px;min-height:18mm;font-size:10.5pt}
+
         /* FOOTER */
         footer {
             background: var(--secondary-blue);
@@ -462,6 +478,7 @@
         <button class="nav-btn" onclick="openTab('gri', event)">4. 6 Quy Tắc GRI (HS)</button>
         <button class="nav-btn" onclick="openTab('exercises', event)">5. Ngân Hàng Bài Tập (1-10)</button>
         <button class="nav-btn" style="background-color: #2e7d32; color: white;" onclick="openTab('co-practice', event)">7. Thực Hành Lập C/O</button>
+        <button class="nav-btn" style="background-color: #00897b; color: white;" onclick="openTab('lab', event)">8. Thực Hành Tính Toán</button>
         <button class="nav-btn" style="background-color: #d81b60; color: white;" onclick="openTab('exam', event)">6. Bài Kiểm Tra (30 Bài)</button>
     </nav>
 
@@ -581,6 +598,57 @@
                     </table>
                 </div>
             </div>
+
+            <h3 style="margin-top:25px;">Giải Thích Chi Tiết Quy Tắc CTC</h3>
+            <div class="theory-box">
+                <strong>CTC là gì?</strong> Hàng hóa được coi là "đã trải qua chế biến đủ lớn" tại nước xuất khẩu nếu mã HS của thành phẩm <em>khác</em> mã HS của nguyên liệu nhập khẩu không có xuất xứ. Mã HS đổi ở cấp càng cao (Chương &gt; Nhóm &gt; Phân nhóm) thì sự biến đổi về bản chất hàng hóa càng lớn.
+            </div>
+
+            <div class="sim-grid">
+                <div class="sim-card">
+                    <h3>Đọc mã HS theo từng cấp</h3>
+                    <p>Lấy mã <strong>2009.71</strong> (nước táo ép) làm ví dụ:</p>
+                    <table>
+                        <tr><th>Cấp</th><th>Chữ số</th><th>Giá trị</th></tr>
+                        <tr><td>Chương</td><td>2 số đầu</td><td>20</td></tr>
+                        <tr><td>Nhóm</td><td>4 số đầu</td><td>2009</td></tr>
+                        <tr><td>Phân nhóm</td><td>6 số đầu</td><td>2009.71</td></tr>
+                    </table>
+                    <p style="font-size:.9rem;">Mã 8 số là cấp quốc gia (Biểu thuế Việt Nam). CTC chỉ so sánh đến tối đa 6 số vì đó là phần thống nhất quốc tế.</p>
+                </div>
+                <div class="sim-card">
+                    <h3>Quy trình áp dụng 4 bước</h3>
+                    <ol style="margin-left:20px;">
+                        <li>Xác định mã HS của <strong>thành phẩm</strong> và quy tắc cụ thể của mặt hàng (CC, CTH hay CTSH).</li>
+                        <li>Liệt kê <strong>từng</strong> nguyên liệu không có xuất xứ cùng mã HS của nó.</li>
+                        <li>So sánh mã của từng nguyên liệu với mã thành phẩm ở đúng cấp yêu cầu.</li>
+                        <li>Kết luận: chỉ <strong>ĐẠT</strong> khi <u>mọi</u> nguyên liệu không có xuất xứ đều đã đổi mã ở cấp đó. Chỉ cần một nguyên liệu không đổi là không đạt.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h3>Mức độ chặt – lỏng của ba tiêu chí</h3>
+            <p>CC là tiêu chí <strong>chặt nhất</strong>, CTSH là <strong>lỏng nhất</strong>. Hàng đạt CC thì chắc chắn đạt CTH và CTSH; ngược lại thì không.</p>
+            <table>
+                <tr><th>Nguyên liệu → Thành phẩm</th><th>Thay đổi cao nhất</th><th>CC</th><th>CTH</th><th>CTSH</th></tr>
+                <tr><td>0808.10 → 2009.71 (táo tươi → nước táo ép)</td><td>Chương (08 → 20)</td><td style="color:green;font-weight:bold;">Đạt</td><td style="color:green;font-weight:bold;">Đạt</td><td style="color:green;font-weight:bold;">Đạt</td></tr>
+                <tr><td>3901.10 → 3923.30 (nhựa nguyên sinh → chai nhựa)</td><td>Nhóm (3901 → 3923), cùng Chương 39</td><td style="color:red;font-weight:bold;">Không</td><td style="color:green;font-weight:bold;">Đạt</td><td style="color:green;font-weight:bold;">Đạt</td></tr>
+                <tr><td>2009.79 → 2009.71 (nước táo cô đặc → nước táo ép)</td><td>Phân nhóm (200979 → 200971), cùng Nhóm 2009</td><td style="color:red;font-weight:bold;">Không</td><td style="color:red;font-weight:bold;">Không</td><td style="color:green;font-weight:bold;">Đạt</td></tr>
+                <tr><td>2106.90 → 2106.90</td><td>Không thay đổi</td><td style="color:red;font-weight:bold;">Không</td><td style="color:red;font-weight:bold;">Không</td><td style="color:red;font-weight:bold;">Không</td></tr>
+            </table>
+
+            <div class="alert-box">
+                <strong>Những điểm cần nhớ khi làm bài:</strong>
+                <ul style="margin-left:20px; margin-top:6px;">
+                    <li>Chỉ xét nguyên liệu <strong>không có xuất xứ</strong>. Nguyên liệu mua trong nước hoặc nhập từ nước thành viên có C/O hợp lệ thì không cần xét đổi mã.</li>
+                    <li>Mức CTC (CC, CTH hay CTSH) do <strong>quy tắc cụ thể của từng mặt hàng (PSR)</strong> trong hiệp định quy định, không tự chọn tùy ý.</li>
+                    <li>Nhiều hiệp định cho phép <strong>de minimis</strong>: nguyên liệu không đạt CTC vẫn được bỏ qua nếu tổng giá trị không quá một tỷ lệ nhất định của giá FOB (thường là 10%).</li>
+                    <li>Phải dùng mã HS theo <strong>phiên bản HS</strong> mà hiệp định áp dụng, vì mã có thể khác giữa các phiên bản.</li>
+                </ul>
+            </div>
+            <div class="theory-box">
+                <strong>Lỗi thường gặp:</strong> (1) chỉ so sánh nguyên liệu chính mà bỏ sót phụ liệu như nút, chỉ, bao bì; (2) so sánh sai cấp, ví dụ thấy khác nhau ở 6 số nhưng quy tắc yêu cầu CTH (4 số); (3) quên rằng cùng Nhóm thì CTH không đạt dù phân nhóm có khác nhau.
+            </div>
         </div>
 
         <!-- TAB 3: TÍNH TOÁN RVC -->
@@ -639,6 +707,54 @@
                     </table>
                 </div>
             </div>
+
+            <h3 style="margin-top:25px;">Giải Thích Chi Tiết Hàm Lượng Giá Trị Khu Vực (RVC)</h3>
+            <div class="theory-box">
+                <strong>RVC cho biết điều gì?</strong> Tỷ lệ giá trị của hàng hóa được tạo ra bên trong khu vực FTA (nguyên liệu có xuất xứ, nhân công, chi phí sản xuất, lợi nhuận) trên giá xuất khẩu FOB. FTA đặt ngưỡng tối thiểu, thường là 40%; đạt ngưỡng thì hàng được coi là có xuất xứ.
+            </div>
+
+            <table style="max-width:760px;">
+                <tr><th>Ký hiệu</th><th>Ý nghĩa</th><th>Lưu ý</th></tr>
+                <tr><td><strong>FOB</strong></td><td>Giá xuất khẩu giao qua lan can tàu</td><td>Nếu hợp đồng bán giá CIF thì <strong>FOB = CIF − cước vận tải − phí bảo hiểm</strong></td></tr>
+                <tr><td><strong>VNM</strong></td><td>Giá trị nguyên liệu không có xuất xứ (hoặc không xác định được xuất xứ)</td><td>Tính theo giá CIF tại thời điểm nhập khẩu</td></tr>
+                <tr><td><strong>VOM</strong></td><td>Giá trị nguyên liệu có xuất xứ</td><td>Gồm nguyên liệu trong nước và nguyên liệu nhập từ nước thành viên có C/O hợp lệ</td></tr>
+            </table>
+
+            <div class="sim-grid">
+                <div class="sim-card">
+                    <h3>Phương pháp gián tiếp (trừ đi phần ngoại khối)</h3>
+                    <p style="text-align:center;font-weight:bold;color:var(--bright-red);">RVC = (FOB − VNM) / FOB × 100%</p>
+                    <p><strong>Ví dụ đạt:</strong> FOB = 100, VNM = 40 → RVC = (100 − 40) / 100 = <strong>60%</strong> ≥ 40% → ĐẠT.</p>
+                    <p><strong>Ví dụ không đạt:</strong> FOB = 100, VNM = 65 → RVC = <strong>35%</strong> &lt; 40% → KHÔNG ĐẠT.</p>
+                    <p style="font-size:.9rem;">Mẹo: với ngưỡng 40%, VNM tối đa được phép là FOB × (1 − 40%) = <strong>60% FOB</strong>.</p>
+                </div>
+                <div class="sim-card">
+                    <h3>Phương pháp trực tiếp (cộng phần nội khối)</h3>
+                    <p style="text-align:center;font-weight:bold;color:var(--bright-red);">RVC = (VOM + nhân công trực tiếp + chi phí chung + lợi nhuận + chi phí khác) / FOB × 100%</p>
+                    <p><strong>Ví dụ:</strong> FOB = 100; VOM = 20; nhân công = 15; chi phí chung = 8; lợi nhuận = 12; chi phí khác = 5. Tổng nội khối = 60 → RVC = <strong>60%</strong>.</p>
+                    <p style="font-size:.9rem;">Kết quả trùng với phương pháp gián tiếp ở ví dụ bên cạnh (VNM = 40) vì hai phương pháp cùng chia FOB thành phần nội khối và ngoại khối.</p>
+                </div>
+            </div>
+
+            <h3>Các bước tính trong bài tập</h3>
+            <ol style="margin-left:20px;">
+                <li>Lập bảng nguyên liệu, ghi nước xuất xứ và C/O của từng loại.</li>
+                <li>Phân loại: có xuất xứ (OM) hay không (VNM). Cộng giá trị các nguyên liệu VNM.</li>
+                <li>Tính FOB: cộng nguyên liệu, nhân công, chi phí chung, lợi nhuận, chi phí vận chuyển đến cảng (hoặc quy đổi từ CIF).</li>
+                <li>Thay vào công thức, làm tròn 2 chữ số thập phân, so với ngưỡng và kết luận.</li>
+            </ol>
+
+            <div class="alert-box">
+                <strong>Lỗi thường gặp:</strong>
+                <ul style="margin-left:20px; margin-top:6px;">
+                    <li>Dùng giá CIF hoặc giá bán nội địa thay cho giá <strong>FOB</strong> ở mẫu số.</li>
+                    <li>Đưa nguyên liệu nhập từ nước thành viên <em>có C/O hợp lệ</em> vào VNM. Loại này được tính là nguyên liệu có xuất xứ.</li>
+                    <li>Quên tính nguyên liệu nhập từ nước thành viên nhưng <em>không có C/O</em> vào VNM.</li>
+                    <li>Chia cho tổng chi phí thay vì chia cho FOB (FOB còn gồm lợi nhuận và chi phí vận chuyển đến cảng).</li>
+                    <li>Hiểu nhầm chiều so sánh: RVC phải <strong>lớn hơn hoặc bằng</strong> ngưỡng mới đạt; còn VNM càng lớn thì RVC càng thấp.</li>
+                </ul>
+            </div>
+            <p style="font-size:.9rem;font-style:italic;">Ngưỡng và cách tính RVC có thể khác nhau giữa các hiệp định (ví dụ CPTPP có nhiều phương pháp tính). Luôn đối chiếu quy tắc cụ thể của hiệp định và mặt hàng khi áp dụng thực tế.</p>
         </div>
 
         <!-- TAB 4: 6 QUY TẮC GRI -->
@@ -678,6 +794,71 @@
                     <h3>GRI 6: Cấp Phân Nhóm (6 Số)</h3>
                     <p>Phân loại ở cấp độ phân nhóm dựa trên tên phân nhóm và chú giải phân nhóm liên quan.</p>
                 </div>
+            </div>
+
+            <h3 style="margin-top:25px;">Giải Thích Chi Tiết Từng Quy Tắc GRI</h3>
+            <div class="theory-box">
+                <strong>Cách dùng:</strong> Xác định bản chất, cấu tạo, công dụng của hàng, rồi áp dụng <u>theo thứ tự</u>. Trước hết thử GRI 1. Chỉ khi hàng không phân loại được, hoặc thoạt nhìn thuộc từ hai nhóm trở lên, mới xét tiếp GRI 2, 3, 4, 5. GRI 6 dùng để chọn phân nhóm sau khi đã chọn được nhóm.
+            </div>
+
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                <div class="sim-card">
+                    <h3>GRI 1 – Căn cứ chính</h3>
+                    <p>Dựa vào <strong>tên nhóm</strong> và <strong>Chú giải Phần, Chương</strong>. Tiêu đề Phần, Chương chỉ để tra cứu; điều quyết định là lời văn của tên nhóm và chú giải.</p>
+                    <p><em>Ví dụ:</em> Kem đánh răng → nhóm 33.06 (chế phẩm vệ sinh răng miệng). Phần lớn hàng hóa phân loại xong ở bước này.</p>
+                </div>
+                <div class="sim-card">
+                    <h3>GRI 2(a) – Hàng chưa hoàn chỉnh, tháo rời</h3>
+                    <p>Hàng chưa hoàn chỉnh nhưng đã có <strong>đặc trưng cơ bản</strong> của hàng hoàn chỉnh thì phân loại như hàng hoàn chỉnh. Hàng hoàn chỉnh nhưng nhập khẩu ở dạng tháo rời hoặc chưa lắp ráp cũng vậy.</p>
+                    <p><em>Ví dụ:</em> Xe đạp tháo rời đủ khung, bánh, xích, ghi-đông → phân loại như xe đạp nguyên chiếc (nhóm 87.12).</p>
+                </div>
+                <div class="sim-card">
+                    <h3>GRI 2(b) – Hỗn hợp, kết hợp vật liệu</h3>
+                    <p>Nhóm ghi tên một nguyên liệu thì cũng bao gồm hỗn hợp hoặc sản phẩm kết hợp nguyên liệu đó với vật liệu khác. Nếu vì thế hàng thuộc từ hai nhóm trở lên, chuyển sang <strong>GRI 3</strong>.</p>
+                </div>
+                <div class="sim-card">
+                    <h3>GRI 3 – Hàng thuộc nhiều nhóm</h3>
+                    <p><strong>3(a):</strong> chọn nhóm mô tả <em>cụ thể nhất</em>. Nhóm gọi tên đích danh món hàng cụ thể hơn nhóm chỉ mô tả chung.</p>
+                    <p><strong>3(b):</strong> với hàng hỗn hợp hoặc bộ hàng bán lẻ, chọn theo vật liệu hoặc bộ phận tạo nên <em>đặc trưng cơ bản</em>.</p>
+                    <p><strong>3(c):</strong> nếu vẫn không xác định được, chọn nhóm có <em>số thứ tự sau cùng</em>.</p>
+                    <p style="font-size:.9rem;"><em>Bộ hàng bán lẻ</em> cần đủ 3 điều kiện: có ít nhất 2 mặt hàng thuộc các nhóm khác nhau; được xếp cùng nhau để phục vụ một nhu cầu hoặc hoạt động riêng; đóng gói sẵn để bán thẳng cho người dùng mà không cần đóng gói lại.</p>
+                    <p><em>Ví dụ:</em> Bộ quà gồm rượu vang, đồ mở nút chai, 2 ly thủy tinh → rượu vang tạo đặc trưng cơ bản → nhóm 22.04.</p>
+                </div>
+                <div class="sim-card">
+                    <h3>GRI 4 – Hàng giống nhất</h3>
+                    <p>Chỉ dùng khi không áp dụng được GRI 1 đến 3: phân loại theo hàng hóa <strong>giống nhất</strong> về tên gọi, đặc trưng, công dụng. Quy tắc này rất ít khi phải dùng.</p>
+                </div>
+                <div class="sim-card">
+                    <h3>GRI 5 – Bao bì, vỏ chứa</h3>
+                    <p><strong>5(a):</strong> hộp đàn, bao đựng dụng cụ... được thiết kế <em>riêng</em> cho hàng, dùng được lâu dài, nhập cùng hàng → phân loại cùng hàng (hộp đàn Guitar đi cùng đàn).</p>
+                    <p><strong>5(b):</strong> bao bì thông thường chứa hàng (lon, chai, thùng carton) → phân loại cùng hàng. Không áp dụng nếu bao bì rõ ràng dùng lặp lại nhiều lần.</p>
+                </div>
+                <div class="sim-card">
+                    <h3>GRI 6 – Cấp phân nhóm</h3>
+                    <p>Sau khi đã chọn được nhóm 4 số, áp dụng lại các quy tắc 1 đến 5 để chọn <strong>phân nhóm 6 số</strong>, dựa vào tên phân nhóm và chú giải phân nhóm. Chỉ so sánh các phân nhóm <em>cùng cấp</em> trong cùng một nhóm.</p>
+                </div>
+            </div>
+
+            <h3>Chọn quy tắc nào cho tình huống nào?</h3>
+            <table>
+                <tr><th>Tình huống trong đề</th><th>Quy tắc cần nghĩ tới</th></tr>
+                <tr><td>Hàng thông thường, có nhóm gọi đúng tên</td><td>GRI 1</td></tr>
+                <tr><td>Hàng tháo rời, thiếu một vài bộ phận nhỏ</td><td>GRI 2(a)</td></tr>
+                <tr><td>Hàng làm từ hai vật liệu, nhóm nào cũng có vẻ phù hợp</td><td>GRI 2(b) → GRI 3</td></tr>
+                <tr><td>Bộ quà, bộ hàng đóng chung để bán lẻ</td><td>GRI 3(b); nếu không có đặc trưng cơ bản thì GRI 3(c)</td></tr>
+                <tr><td>Hộp đàn, vỏ máy ảnh chuyên dụng đi kèm hàng</td><td>GRI 5(a)</td></tr>
+                <tr><td>Lon, chai, thùng carton đựng hàng</td><td>GRI 5(b)</td></tr>
+            </table>
+
+            <div class="alert-box">
+                <strong>Lỗi thường gặp:</strong>
+                <ul style="margin-left:20px; margin-top:6px;">
+                    <li>Bỏ qua <strong>Chú giải Phần, Chương</strong> (có thể loại trừ hoặc quy định riêng cho hàng đó) mà chỉ nhìn tên nhóm.</li>
+                    <li>Nhảy sang GRI 3 khi hàng đã phân loại được bằng GRI 1.</li>
+                    <li>Phân loại theo tên thương mại thay vì theo cấu tạo và công dụng thực tế.</li>
+                    <li>Nhầm GRI 3(a) với 3(b): 3(a) so sánh <em>mức độ cụ thể của tên nhóm</em>, còn 3(b) xét <em>vật liệu hoặc bộ phận tạo đặc trưng</em> của hàng.</li>
+                    <li>Quên rằng mã 8 số là cấp quốc gia: GRI quyết định đến 6 số, hai số cuối tra theo Biểu thuế xuất nhập khẩu Việt Nam.</li>
+                </ul>
             </div>
         </div>
 
@@ -989,6 +1170,37 @@
             </div>
         </div>
 
+        <!-- TAB 8: THỰC HÀNH TÍNH TOÁN & TRÌNH BÀY -->
+        <div id="lab" class="tab-content">
+            <h2>8. Thực Hành Tổng Hợp: Xác Định Xuất Xứ & Phân Loại Cho Một Lô Hàng</h2>
+            <div class="theory-box">
+                <strong>Yêu cầu:</strong> Mỗi sinh viên nhận một bộ số liệu riêng (sinh theo MSSV). Hãy thực hiện lần lượt:
+                (1) phân loại nguyên liệu có / không có xuất xứ, (2) xét chuyển đổi nhóm HS, (3) tính FOB, VNM, RVC,
+                (4) kết luận điều kiện cấp C/O và trình bày các bước tính, (5) phân loại hàng theo quy tắc GRI. Cuối cùng làm <strong>Phần B</strong>: 4 bài tính toán bổ sung (quy đổi CIF sang FOB, RVC trực tiếp, de minimis, mức chuyển đổi mã HS).
+                Nhấn <strong>"Tự kiểm tra"</strong> để biết mục nào đúng/sai (không hiện đáp án), sau đó <strong>xuất PDF</strong> nộp giảng viên.
+            </div>
+
+            <div class="sim-card">
+                <div class="lab-row">
+                    <div class="form-group"><label>Họ và tên:</label><input type="text" id="lab-name" placeholder="Nhập họ tên..."></div>
+                    <div class="form-group"><label>MSSV:</label><input type="text" id="lab-id" placeholder="Nhập MSSV..."></div>
+                    <div class="form-group"><label>Lớp / Khóa:</label><input type="text" id="lab-class" placeholder="Nhập lớp..."></div>
+                    <div class="form-group"><label>Chọn tình huống:</label>
+                        <select id="lab-case">
+                            <option value="0">Ca 1 – Áo sơ mi nam (Form D)</option>
+                            <option value="1">Ca 2 – Nước táo ép (Form E)</option>
+                            <option value="2">Ca 3 – Máy xay sinh tố (Form AK)</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-green" onclick="labGenerate()">Nhận đề bài</button>
+            </div>
+
+            <div id="lab-work" style="display:none;"></div>
+
+            <div id="lab-key" class="gv-solution"></div>
+        </div>
+
         <!-- TAB 6: BÀI KIỂM TRA (30 BÀI TẬP) -->
         <div id="exam" class="tab-content">
             <h2>Hệ Thống 30 Bài Tập Kiểm Tra Luyện Tập Chương 3</h2>
@@ -1251,6 +1463,7 @@
         }
 
         function showGVSolutions() {
+            window.__gvOn = true;
             const solutions = document.querySelectorAll('.gv-solution');
             solutions.forEach(sol => {
                 sol.style.display = 'block';
@@ -1281,6 +1494,286 @@
 
             html2pdf().set(opt).from(element).save();
         }
+
+        // ===== TAB 8: THỰC HÀNH TÍNH TOÁN & TRÌNH BÀY =====
+        // Lưu ý: các quy tắc xuất xứ bên dưới là GIẢ ĐỊNH phục vụ học tập, không thay thế quy tắc cụ thể của từng FTA.
+        const LAB_CASES = [
+            { key:'AS', product:'Áo sơ mi nam cotton', hsOut:'6205.20', form:'Form D (ATIGA)', short:'Form D', dest:'Singapore',
+              bloc:['Việt Nam','Thái Lan','Indonesia','Malaysia','Singapore'], rule:'or', thr:40,
+              mats:[
+                { n:'Vải cotton in hoa', hs:'5208.52', c:'Trung Quốc', co:false, r:[2200,3000] },
+                { n:'Vải cotton trơn', hs:'5208.22', c:'Thái Lan', co:true, r:[1500,2200] },
+                { n:'Chỉ may polyester', hs:'5401.10', c:'Việt Nam', co:false, r:[300,500] },
+                { n:'Nút áo nhựa', hs:'9606.21', c:'Malaysia', co:false, r:[250,400] },
+                { n:'Bao bì carton', hs:'4819.10', c:'Việt Nam', co:false, r:[200,350] } ],
+              costs:[['Nhân công trực tiếp',1800,2400],['Chi phí sản xuất chung',600,900],['Lợi nhuận',900,1300],['Vận chuyển nội địa & phí cảng',300,500]],
+              gri:{ t:'Hộp quà bán lẻ gồm 1 áo sơ mi nam (nhóm 6205) và 1 cà vạt lụa (nhóm 6215) đóng chung. Không có vật phẩm nào chiếm ưu thế về giá trị, nhưng áo sơ mi tạo nên đặc trưng cơ bản của bộ hàng.', r:'3(b)', hs:'6205' } },
+            { key:'NT', product:'Nước táo ép đóng lon', hsOut:'2009.71', form:'Form E (ACFTA)', short:'Form E', dest:'Trung Quốc',
+              bloc:['Việt Nam','Trung Quốc','Thái Lan','Malaysia','Indonesia','Singapore'], rule:'both', thr:40,
+              mats:[
+                { n:'Táo tươi', hs:'0808.10', c:'Việt Nam', co:false, r:[3000,4200] },
+                { n:'Nước táo cô đặc', hs:'2009.79', c:'Trung Quốc', co:false, r:[1800,2600] },
+                { n:'Đường tinh luyện', hs:'1701.99', c:'Brazil', co:false, r:[400,700] },
+                { n:'Lon nhôm', hs:'7612.90', c:'Trung Quốc', co:true, r:[500,800] } ],
+              costs:[['Nhân công trực tiếp',1500,2000],['Chi phí sản xuất chung',700,1000],['Lợi nhuận',1000,1400],['Vận chuyển nội địa & phí cảng',300,500]],
+              gri:{ t:'Nước táo ép được đóng trong lon nhôm thông thường, nhập khẩu cùng lô, bán lẻ cho người tiêu dùng. Lon nhôm thuộc loại bao bì thông thường, không có giá trị sử dụng lâu dài riêng.', r:'5(b)', hs:'2009' } },
+            { key:'MX', product:'Máy xay sinh tố gia đình', hsOut:'8509.40', form:'Form AK (AKFTA)', short:'Form AK', dest:'Hàn Quốc',
+              bloc:['Việt Nam','Hàn Quốc','Thái Lan','Malaysia','Indonesia','Singapore'], rule:'rvc', thr:55,
+              mats:[
+                { n:'Động cơ điện', hs:'8501.10', c:'Trung Quốc', co:false, r:[4500,6000] },
+                { n:'Bộ lưỡi dao thép', hs:'8509.90', c:'Hàn Quốc', co:true, r:[1200,1800] },
+                { n:'Cối nhựa', hs:'3924.10', c:'Việt Nam', co:false, r:[800,1200] },
+                { n:'Mạch điều khiển', hs:'8537.10', c:'Nhật Bản', co:false, r:[1800,2600] },
+                { n:'Vỏ máy nhựa', hs:'3926.90', c:'Việt Nam', co:false, r:[700,1000] } ],
+              costs:[['Nhân công trực tiếp',2000,2800],['Chi phí sản xuất chung',900,1300],['Lợi nhuận',1500,2200],['Vận chuyển nội địa & phí cảng',400,700]],
+              gri:{ t:'Lô hàng gồm đầy đủ thân máy (có động cơ), cối, nắp và lưỡi dao của một máy xay sinh tố, đóng chung nhưng chưa lắp ráp.', r:'2(a)', hs:'8509' } }
+        ];
+        const GRI_OPTS = ['1','2(a)','2(b)','3(a)','3(b)','3(c)','4','5(a)','5(b)'];
+        const FORM_OPTS = ['Form D (ATIGA)','Form E (ACFTA)','Form AK (AKFTA)','Form EUR.1 (EVFTA)','Form AJ (AJCEP)'];
+        let labS = null;
+
+        const lv = id => { const e = document.getElementById(id); return e ? e.value.trim() : ''; };
+        const lt = id => { const e = document.getElementById(id); return e && e.value ? e.selectedOptions[0].text : '(chưa chọn)'; };
+        const esc = x => String(x).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+        const usd = n => Number(n).toLocaleString('en-US');
+        const hashStr = t => { let h = 2166136261; for (const ch of t) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
+        const mulberry = a => () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+        const labRule = c => c.rule === 'or' ? `RVC ≥ ${c.thr}% HOẶC CTH (đổi nhóm 4 số)` : c.rule === 'both' ? `đồng thời CTH (đổi nhóm 4 số) VÀ RVC ≥ ${c.thr}%` : `chỉ xét RVC ≥ ${c.thr}% (không xét CTH)`;
+        const labSel = (id, opts) => `<select id="${id}"><option value="">-- chọn --</option>${opts.map(o => `<option value="${o[0]}">${o[1]}</option>`).join('')}</select>`;
+
+        function labGenerate() {
+            const name = lv('lab-name'), id = lv('lab-id');
+            if (!name || !id) { alert('Vui lòng nhập Họ tên và MSSV để nhận đề riêng!'); return; }
+            if (labS && !confirm('Nhận đề mới sẽ xóa bài đang làm. Tiếp tục?')) return;
+            const c = LAB_CASES[+lv('lab-case')], r = mulberry(hashStr(id + '|' + c.key));
+            const pick = (a, b) => Math.round((a + r() * (b - a)) / 10) * 10;
+            const mats = c.mats.map(m => ({ ...m, val: pick(m.r[0], m.r[1]),
+                om: m.c === 'Việt Nam' || (c.bloc.includes(m.c) && m.co),
+                chg: m.hs.slice(0, 4) !== c.hsOut.slice(0, 4) }));
+            const costs = c.costs.map(x => ({ n: x[0], val: pick(x[1], x[2]) }));
+            const sum = a => a.reduce((t, x) => t + x.val, 0);
+            const fob = sum(mats) + sum(costs), vnm = sum(mats.filter(m => !m.om));
+            const rvc = Math.round((fob - vnm) / fob * 10000) / 100;
+            const rvcOK = rvc >= c.thr, cthOK = mats.filter(m => !m.om).every(m => m.chg);
+            const fin = c.rule === 'or' ? (rvcOK || cthOK) : c.rule === 'both' ? (rvcOK && cthOK) : rvcOK;
+            const rb = (a, b, st) => Math.round((a + r() * (b - a)) / st) * st, r2 = x => Math.round(x * 100) / 100;
+            const b1 = { cif: rb(9000, 14000, 10), frt: rb(500, 900, 10), ins: rb(60, 120, 10), vnm: rb(2500, 5500, 10) };
+            b1.fob = b1.cif - b1.frt - b1.ins; b1.rvc = r2((b1.fob - b1.vnm) / b1.fob * 100); b1.ok = b1.rvc >= 40;
+            const b2 = { fob: rb(12000, 16000, 10), vom: rb(1500, 3500, 10), lab: rb(1200, 2200, 10), oh: rb(600, 1000, 10), pr: rb(800, 1400, 10), oth: rb(200, 500, 10) };
+            b2.sum = b2.vom + b2.lab + b2.oh + b2.pr + b2.oth; b2.rvc = r2(b2.sum / b2.fob * 100); b2.ok = b2.rvc >= 40;
+            const b3 = { fob: rb(8000, 12000, 10) }; b3.y = Math.round(b3.fob * rb(60, 140, 1) / 10 / 100 / 10) * 10; b3.pct = r2(b3.y / b3.fob * 100); b3.ok = b3.pct <= 10;
+            const lvl = (a, o) => { a = a.replace('.', ''); o = o.replace('.', ''); return a.slice(0, 2) !== o.slice(0, 2) ? 'CC' : a.slice(0, 4) !== o.slice(0, 4) ? 'CTH' : a.slice(0, 6) !== o.slice(0, 6) ? 'CTSH' : 'NONE'; };
+            const pool = [['5201.00','5208.52'],['0808.10','2009.71'],['2009.79','2009.71'],['3901.10','3923.30'],['0901.21','0901.22'],['7208.10','7318.15'],['8501.10','8509.40'],['2106.90','2106.90']];
+            const b4 = pool.map(p => [r(), p]).sort((x, y) => x[0] - y[0]).slice(0, 4).map(x => ({ a: x[1][0], o: x[1][1], l: lvl(x[1][0], x[1][1]) }));
+            labS = { c, name, id, cls: lv('lab-class'), mats, costs, fob, vnm, rvc, rvcOK, cthOK, fin, b: { b1, b2, b3, b4 }, tries: 0, res: null };
+            labRender();
+        }
+
+        function labRender() {
+            const s = labS, c = s.c, cth = c.rule !== 'rvc', yn = [['Y','Đạt'],['N','Không đạt']];
+            const mrows = s.mats.map((m, i) => `<tr><td>${i+1}</td><td>${esc(m.n)}</td><td>${m.hs}</td><td>${m.c}</td><td>${m.co ? 'Có (' + c.short + ')' : 'Không có'}</td><td style="text-align:right">${usd(m.val)}</td>
+                <td>${labSel('lab-cls-' + i, [['OM','Có xuất xứ (OM)'],['VNM','Không xuất xứ (VNM)']])}</td>
+                ${cth ? `<td>${labSel('lab-chg-' + i, [['Y','Có đổi nhóm'],['N','Không đổi nhóm']])}</td>` : ''}</tr>`).join('');
+            const crows = s.costs.map(x => `<tr><td>${esc(x.n)}</td><td style="text-align:right">${usd(x.val)}</td></tr>`).join('');
+            const w = document.getElementById('lab-work');
+            w.style.display = 'block';
+            w.innerHTML = `
+            <div class="lab-step"><h3>Bước 1 – Đề bài</h3><div>
+                <p>Công ty TNHH Sản Xuất Việt Phát xuất khẩu một lô <strong>${c.product}</strong> (mã HS thành phẩm <strong>${c.hsOut}</strong>) sang ${c.dest}, đề nghị cấp <strong>C/O ${c.form}</strong>. Mọi giá trị tính cho cả lô hàng, đơn vị USD.</p>
+                <p style="margin-top:6px;"><strong>Quy tắc xuất xứ áp dụng (giả định học tập):</strong> ${labRule(c)}.</p>
+                <p><strong>Nước thành viên FTA:</strong> ${c.bloc.join(', ')}.</p>
+                <div class="alert-box" style="margin:8px 0;">Nguyên liệu được coi là <strong>có xuất xứ (OM)</strong> khi sản xuất tại Việt Nam, hoặc nhập từ nước thành viên FTA <em>và</em> có C/O hợp lệ. Các trường hợp còn lại là <strong>không có xuất xứ (VNM)</strong>.</div>
+                <table style="max-width:460px"><tr><th>Chi phí khác cấu thành giá FOB</th><th>USD</th></tr>${crows}</table>
+            </div></div>
+
+            <div class="lab-step"><h3>Bước 2 – Phân loại nguyên liệu${cth ? ' và xét đổi nhóm HS' : ''}</h3><div>
+                <div class="lab-table"><table><tr><th>STT</th><th>Nguyên liệu</th><th>Mã HS</th><th>Nước xuất xứ</th><th>C/O ${c.short}</th><th>Giá trị (USD)</th><th>Phân loại</th>${cth ? `<th>Đổi nhóm 4 số so với ${c.hsOut.slice(0,4)}?</th>` : ''}</tr>${mrows}</table></div>
+                ${cth ? '<p style="font-size:.9rem;">Cột "Đổi nhóm" chỉ cần xét cho nguyên liệu không có xuất xứ.</p>' : ''}
+            </div></div>
+
+            <div class="lab-step"><h3>Bước 3 – Tính toán</h3><div>
+                <div class="lab-row">
+                    <div class="form-group"><label>Giá FOB của lô hàng (USD):</label><input type="number" id="lab-fob" step="0.01"></div>
+                    <div class="form-group"><label>Tổng giá trị VNM (USD):</label><input type="number" id="lab-vnm" step="0.01"></div>
+                    <div class="form-group"><label>RVC = (FOB − VNM) / FOB × 100 (%), làm tròn 2 số lẻ:</label><input type="number" id="lab-rvc" step="0.01"></div>
+                    <div class="form-group"><label>Tiêu chí RVC ≥ ${c.thr}%:</label>${labSel('lab-rvcok', yn)}</div>
+                    ${cth ? `<div class="form-group"><label>Tiêu chí CTH:</label>${labSel('lab-cthok', yn)}</div>` : ''}
+                </div>
+                <div class="form-group"><label>Trình bày các bước tính (ghi rõ công thức và số liệu thay vào):</label><textarea id="lab-calc" rows="5" placeholder="Ví dụ: FOB = ... + ... = ...; VNM = ...; RVC = ..."></textarea></div>
+            </div></div>
+
+            <div class="lab-step"><h3>Bước 4 – Kết luận</h3><div>
+                <div class="lab-row">
+                    <div class="form-group"><label>Lô hàng có đủ điều kiện hưởng ưu đãi không?</label>${labSel('lab-final', [['Y','ĐỦ điều kiện'],['N','KHÔNG đủ điều kiện']])}</div>
+                    <div class="form-group"><label>Mẫu C/O cần đề nghị cấp:</label>${labSel('lab-form', FORM_OPTS.map(f => [f, f]))}</div>
+                </div>
+                <div class="form-group"><label>Giải trình kết luận và kiến nghị cho doanh nghiệp (nêu căn cứ từ các bước trên):</label><textarea id="lab-text" rows="5"></textarea></div>
+            </div></div>
+
+            <div class="lab-step"><h3>Bước 5 – Phân loại hàng hóa theo GRI</h3><div>
+                <p style="margin-bottom:8px;">${esc(c.gri.t)}</p>
+                <div class="lab-row">
+                    <div class="form-group"><label>Quy tắc GRI áp dụng:</label>${labSel('lab-gri', GRI_OPTS.map(g => [g, 'GRI ' + g]))}</div>
+                    <div class="form-group"><label>Mã HS 4 số của bộ hàng/hàng hóa:</label><input type="text" id="lab-hs" maxlength="5" placeholder="Ví dụ: 6205"></div>
+                </div>
+            </div></div>
+
+            ${labBHtml(s)}
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;">
+                <button class="btn" onclick="labCheck()">Tự kiểm tra</button>
+                <button class="btn btn-red" onclick="labExport()">Xuất Báo Cáo Ra File PDF (A4)</button>
+            </div>
+            <div id="lab-result" class="result-panel" style="display:none;"></div>
+
+            <h3 style="margin-top:20px;">Bản xem trước báo cáo (sẽ in ra PDF)</h3>
+            <div class="a4-preview-container"><div id="lab-report" class="lab-page"></div></div>`;
+
+            const k = document.getElementById('lab-key');
+            const rows = s.mats.map((m, i) => `${i+1}. ${m.n}: ${m.om ? 'OM' : 'VNM'}${!m.om ? (m.chg ? ', có đổi nhóm' : ', KHÔNG đổi nhóm') : ''}`).join('<br>');
+            k.innerHTML = `<strong>Đáp án GV – ${esc(s.name)} (${esc(s.id)}):</strong><br>${rows}<br>FOB = ${usd(s.fob)} | VNM = ${usd(s.vnm)} | RVC = ${s.rvc.toFixed(2)}% (${s.rvcOK ? 'Đạt' : 'Không đạt'})${cth ? ' | CTH: ' + (s.cthOK ? 'Đạt' : 'Không đạt') : ''}<br>Kết luận: ${s.fin ? 'ĐỦ điều kiện' : 'KHÔNG đủ điều kiện'} – ${c.form}<br>GRI ${c.gri.r} – HS ${c.gri.hs}<br><strong>Phần B:</strong> B1 FOB ${usd(s.b.b1.fob)}, RVC ${s.b.b1.rvc}% | B2 nội khối ${usd(s.b.b2.sum)}, RVC ${s.b.b2.rvc}% | B3 ${s.b.b3.pct}% (${s.b.b3.ok ? 'được chấp nhận' : 'không'}) | B4 ${s.b.b4.map(x => x.l).join(', ')}`;
+            if (window.__gvOn) k.style.display = 'block';
+            labReport();
+        }
+
+        const B4_OPTS = [['CC','Đạt CC (đổi chương)'],['CTH','Đạt CTH, không đạt CC'],['CTSH','Đạt CTSH, không đạt CTH'],['NONE','Không đổi ở cấp 6 số']];
+        const B3_OPTS = [['Y','Được chấp nhận (vẫn có xuất xứ)'],['N','Không được chấp nhận']];
+
+        function labBHtml(s) {
+            const { b1, b2, b3, b4 } = s.b, yn = [['Y','Đạt'],['N','Không đạt']];
+            const num = (id, l) => `<div class="form-group"><label>${l}</label><input type="number" id="${id}" step="0.01"></div>`;
+            return `
+            <h3 style="margin-top:22px;color:var(--secondary-blue);">Phần B – Bài tập tính toán bổ sung (độc lập với tình huống trên)</h3>
+            <div class="lab-step"><h3>Bài B1 – Quy đổi CIF sang FOB, tính RVC gián tiếp (ATIGA, ngưỡng 40%)</h3><div>
+                <p>Hợp đồng bán giá CIF = <strong>${usd(b1.cif)}</strong> USD; cước vận tải biển = <strong>${usd(b1.frt)}</strong> USD; phí bảo hiểm = <strong>${usd(b1.ins)}</strong> USD. Tổng giá trị nguyên liệu không có xuất xứ (VNM) = <strong>${usd(b1.vnm)}</strong> USD.</p>
+                <div class="lab-row">${num('lab-b1fob','Giá FOB (USD) = CIF − cước − bảo hiểm:')}${num('lab-b1rvc','RVC gián tiếp (%), 2 số lẻ:')}<div class="form-group"><label>RVC ≥ 40%:</label>${labSel('lab-b1ok', yn)}</div></div>
+            </div></div>
+            <div class="lab-step"><h3>Bài B2 – Tính RVC theo phương pháp trực tiếp (ngưỡng 40%)</h3><div>
+                <p>Giá FOB = <strong>${usd(b2.fob)}</strong> USD. Nguyên liệu có xuất xứ (VOM) = <strong>${usd(b2.vom)}</strong>; nhân công trực tiếp = <strong>${usd(b2.lab)}</strong>; chi phí chung = <strong>${usd(b2.oh)}</strong>; lợi nhuận = <strong>${usd(b2.pr)}</strong>; chi phí khác = <strong>${usd(b2.oth)}</strong> (USD).</p>
+                <p style="font-size:.9rem;">RVC trực tiếp = (VOM + nhân công + chi phí chung + lợi nhuận + chi phí khác) / FOB × 100.</p>
+                <div class="lab-row">${num('lab-b2sum','Tổng giá trị nội khối (USD):')}${num('lab-b2rvc','RVC trực tiếp (%), 2 số lẻ:')}<div class="form-group"><label>RVC ≥ 40%:</label>${labSel('lab-b2ok', yn)}</div></div>
+            </div></div>
+            <div class="lab-step"><h3>Bài B3 – Quy tắc de minimis (cho phép tối đa 10% FOB)</h3><div>
+                <p>Giá FOB = <strong>${usd(b3.fob)}</strong> USD. Nguyên liệu không có xuất xứ <em>không đạt CTH</em> có tổng giá trị = <strong>${usd(b3.y)}</strong> USD. Nếu giá trị này không vượt 10% FOB thì hàng vẫn được coi là đạt tiêu chí CTH.</p>
+                <div class="lab-row">${num('lab-b3pct','Tỷ lệ so với FOB (%), 2 số lẻ:')}<div class="form-group"><label>Kết luận:</label>${labSel('lab-b3ok', B3_OPTS)}</div></div>
+            </div></div>
+            <div class="lab-step"><h3>Bài B4 – Xác định mức chuyển đổi mã HS</h3><div>
+                <p style="margin-bottom:6px;">Với mỗi cặp (mã nguyên liệu → mã thành phẩm), chọn mức thay đổi cao nhất đạt được.</p>
+                <table style="max-width:640px"><tr><th>Nguyên liệu</th><th>Thành phẩm</th><th>Mức chuyển đổi</th></tr>${b4.map((x, i) => `<tr><td>${x.a}</td><td>${x.o}</td><td>${labSel('lab-b4-' + i, B4_OPTS)}</td></tr>`).join('')}</table>
+            </div></div>
+            <div class="form-group"><label>Trình bày cách tính Phần B (ghi công thức và số liệu của từng bài):</label><textarea id="lab-bcalc" rows="5"></textarea></div>`;
+        }
+
+        function labBReport(s) {
+            const { b1, b2, b3, b4 } = s.b, v = id => lv(id) ? esc(lv(id)) : '(chưa điền)';
+            return `<h4>5. Phần B – Bài tập tính toán bổ sung</h4>
+                <table><tr><th style="width:8%">Bài</th><th>Dữ liệu đề</th><th style="width:34%">Kết quả của sinh viên</th></tr>
+                <tr><td>B1</td><td>CIF ${usd(b1.cif)}; cước ${usd(b1.frt)}; bảo hiểm ${usd(b1.ins)}; VNM ${usd(b1.vnm)} (USD)</td><td>FOB: ${v('lab-b1fob')}<br>RVC: ${v('lab-b1rvc')}%<br>${lt('lab-b1ok')}</td></tr>
+                <tr><td>B2</td><td>FOB ${usd(b2.fob)}; VOM ${usd(b2.vom)}; nhân công ${usd(b2.lab)}; chi phí chung ${usd(b2.oh)}; lợi nhuận ${usd(b2.pr)}; chi phí khác ${usd(b2.oth)} (USD)</td><td>Tổng nội khối: ${v('lab-b2sum')}<br>RVC: ${v('lab-b2rvc')}%<br>${lt('lab-b2ok')}</td></tr>
+                <tr><td>B3</td><td>FOB ${usd(b3.fob)}; nguyên liệu không đạt CTH ${usd(b3.y)} (USD)</td><td>Tỷ lệ: ${v('lab-b3pct')}%<br>${lt('lab-b3ok')}</td></tr>
+                <tr><td>B4</td><td>${b4.map(x => x.a + ' → ' + x.o).join('<br>')}</td><td>${b4.map((x, i) => lt('lab-b4-' + i)).join('<br>')}</td></tr></table>
+                <div><strong>Cách tính Phần B:</strong></div><div class="lab-pre">${v('lab-bcalc')}</div>`;
+        }
+
+        function labEval() {
+            const s = labS, c = s.c, cth = c.rule !== 'rvc', items = [];
+            const add = (t, max, ok) => items.push({ t, max, got: max * ok });
+            const yn = b => b ? 'Y' : 'N';
+            add('Phân loại nguyên liệu OM/VNM', 2, s.mats.filter((m, i) => lv('lab-cls-' + i) === (m.om ? 'OM' : 'VNM')).length / s.mats.length);
+            add('Giá FOB', 1, Math.abs(parseFloat(lv('lab-fob')) - s.fob) < 0.5 ? 1 : 0);
+            add('Giá trị VNM', 1, Math.abs(parseFloat(lv('lab-vnm')) - s.vnm) < 0.5 ? 1 : 0);
+            add('Tỷ lệ RVC', 1, Math.abs(parseFloat(lv('lab-rvc')) - s.rvc) <= 0.05 ? 1 : 0);
+            if (cth) {
+                const ids = s.mats.map((m, i) => i).filter(i => !s.mats[i].om);
+                add('Xét đổi nhóm HS của nguyên liệu VNM', 1.5, ids.length ? ids.filter(i => lv('lab-chg-' + i) === yn(s.mats[i].chg)).length / ids.length : 1);
+                add('Kết luận tiêu chí CTH', 0.5, lv('lab-cthok') === yn(s.cthOK) ? 1 : 0);
+            }
+            add('Kết luận tiêu chí RVC', 0.5, lv('lab-rvcok') === yn(s.rvcOK) ? 1 : 0);
+            add('Kết luận lô hàng có đủ điều kiện', 1, lv('lab-final') === yn(s.fin) ? 1 : 0);
+            add('Chọn đúng mẫu C/O', 0.5, lv('lab-form') === c.form ? 1 : 0);
+            add('Quy tắc GRI', 0.5, lv('lab-gri') === c.gri.r ? 1 : 0);
+            add('Mã HS 4 số', 0.5, lv('lab-hs').replace(/\D/g, '') === c.gri.hs ? 1 : 0);
+            add('Trình bày (bước tính và giải trình)', 0.5, lv('lab-calc').length >= 40 && lv('lab-text').length >= 40 ? 1 : 0);
+            const b = s.b, nb = id => parseFloat(lv(id));
+            add('B1 – Giá FOB', 1, Math.abs(nb('lab-b1fob') - b.b1.fob) < 0.5 ? 1 : 0);
+            add('B1 – RVC gián tiếp', 1, Math.abs(nb('lab-b1rvc') - b.b1.rvc) <= 0.05 ? 1 : 0);
+            add('B1 – Kết luận', 0.5, lv('lab-b1ok') === yn(b.b1.ok) ? 1 : 0);
+            add('B2 – Tổng giá trị nội khối', 1, Math.abs(nb('lab-b2sum') - b.b2.sum) < 0.5 ? 1 : 0);
+            add('B2 – RVC trực tiếp', 1, Math.abs(nb('lab-b2rvc') - b.b2.rvc) <= 0.05 ? 1 : 0);
+            add('B2 – Kết luận', 0.5, lv('lab-b2ok') === yn(b.b2.ok) ? 1 : 0);
+            add('B3 – Tỷ lệ de minimis', 1, Math.abs(nb('lab-b3pct') - b.b3.pct) <= 0.05 ? 1 : 0);
+            add('B3 – Kết luận', 0.5, lv('lab-b3ok') === yn(b.b3.ok) ? 1 : 0);
+            add('B4 – Mức chuyển đổi mã HS', 2, b.b4.filter((x, i) => lv('lab-b4-' + i) === x.l).length / b.b4.length);
+            add('B – Trình bày cách tính', 0.5, lv('lab-bcalc').length >= 40 ? 1 : 0);
+            const max = items.reduce((t, x) => t + x.max, 0), got = items.reduce((t, x) => t + x.got, 0);
+            return { items, score: Math.round(got / max * 100) / 10 };
+        }
+
+        function labCheck() {
+            if (!labS) { alert('Hãy nhận đề bài trước!'); return; }
+            labS.tries++;
+            labS.res = labEval();
+            const r = labS.res, p = document.getElementById('lab-result');
+            p.style.display = 'block';
+            p.className = 'result-panel ' + (r.score >= 5 ? 'pass' : 'fail');
+            p.innerHTML = `Điểm tự kiểm tra: ${r.score.toFixed(1)}/10 (lần ${labS.tries}). Hệ thống không hiện đáp án, hãy rà lại các mục bị đánh dấu sai.<ul class="lab-check">${r.items.map(x => `<li>${x.got === x.max ? '✔' : x.got > 0 ? '◐' : '✘'} ${x.t}</li>`).join('')}</ul>`;
+            labReport();
+        }
+
+        function labReport() {
+            const s = labS; if (!s) return;
+            const c = s.c, cth = c.rule !== 'rvc', val = id => lv(id) ? esc(lv(id)) : '(chưa điền)';
+            const mrows = s.mats.map((m, i) => `<tr><td>${i+1}</td><td>${esc(m.n)}</td><td>${m.hs}</td><td>${m.c}</td><td>${m.co ? 'Có' : 'Không'}</td><td style="text-align:right">${usd(m.val)}</td><td>${lt('lab-cls-' + i)}</td>${cth ? `<td>${lt('lab-chg-' + i)}</td>` : ''}</tr>`).join('');
+            const crows = s.costs.map(x => `<tr><td>${esc(x.n)}</td><td style="text-align:right">${usd(x.val)}</td></tr>`).join('');
+            document.getElementById('lab-report').innerHTML = `
+                <div style="text-align:center;border-bottom:2px solid #000;padding-bottom:6px;">
+                    <div style="font-weight:bold;font-size:14pt;">BÁO CÁO THỰC HÀNH CHƯƠNG 3</div>
+                    <div>Xuất xứ & Phân loại hàng hóa – Môn Khai Báo Hải Quan</div>
+                </div>
+                <p style="margin-top:6px;"><strong>Sinh viên:</strong> ${esc(s.name)} &nbsp;|&nbsp; <strong>MSSV:</strong> ${esc(s.id)} &nbsp;|&nbsp; <strong>Lớp:</strong> ${esc(s.cls) || '...'}</p>
+                <p><strong>Tình huống:</strong> ${c.product} – HS ${c.hsOut} – xuất sang ${c.dest} – đề nghị cấp ${c.form}</p>
+                <p><strong>Quy tắc áp dụng:</strong> ${labRule(c)}</p>
+                <h4>1. Số liệu lô hàng và kết quả phân loại nguyên liệu</h4>
+                <table><tr><th>STT</th><th>Nguyên liệu</th><th>Mã HS</th><th>Nước XX</th><th>C/O</th><th>USD</th><th>Phân loại</th>${cth ? '<th>Đổi nhóm 4 số</th>' : ''}</tr>${mrows}</table>
+                <table style="width:60%"><tr><th>Chi phí khác</th><th>USD</th></tr>${crows}</table>
+                <h4>2. Kết quả tính toán</h4>
+                <table><tr><th>FOB (USD)</th><th>VNM (USD)</th><th>RVC (%)</th><th>RVC ≥ ${c.thr}%</th>${cth ? '<th>CTH</th>' : ''}</tr>
+                <tr><td>${val('lab-fob')}</td><td>${val('lab-vnm')}</td><td>${val('lab-rvc')}</td><td>${lt('lab-rvcok')}</td>${cth ? `<td>${lt('lab-cthok')}</td>` : ''}</tr></table>
+                <div><strong>Các bước tính:</strong></div><div class="lab-pre">${val('lab-calc')}</div>
+                <h4>3. Kết luận</h4>
+                <p><strong>Điều kiện hưởng ưu đãi:</strong> ${lt('lab-final')} &nbsp;|&nbsp; <strong>Mẫu C/O:</strong> ${lt('lab-form')}</p>
+                <div class="lab-pre">${val('lab-text')}</div>
+                <h4>4. Phân loại theo GRI</h4>
+                <p>${esc(c.gri.t)}</p>
+                <p><strong>Quy tắc áp dụng:</strong> ${lv('lab-gri') ? 'GRI ' + esc(lv('lab-gri')) : '(chưa chọn)'} &nbsp;|&nbsp; <strong>Mã HS 4 số:</strong> ${val('lab-hs')}</p>
+                ${labBReport(s)}
+                <p style="margin-top:10px;"><strong>Điểm tự kiểm tra (tham khảo):</strong> ${s.res ? s.res.score.toFixed(1) + '/10 – đã kiểm tra ' + s.tries + ' lần' : 'chưa tự kiểm tra'}</p>
+                <p style="font-size:9.5pt;font-style:italic;">Xuất lúc: ${new Date().toLocaleString('vi-VN')}</p>
+                <div style="display:flex;justify-content:space-between;margin-top:8px;text-align:center;" class="lab-keep"><div>Sinh viên ký tên<br><br><br><br>${esc(s.name)}</div><div>Giảng viên nhận xét<br><br><br><br>&nbsp;</div></div>`;
+        }
+
+        function labExport() {
+            if (!labS) { alert('Hãy nhận đề bài trước!'); return; }
+            const ids = ['lab-fob','lab-vnm','lab-rvc','lab-rvcok','lab-final','lab-form','lab-gri','lab-hs','lab-calc','lab-text'];
+            if (labS.c.rule !== 'rvc') ids.push('lab-cthok');
+            ids.push('lab-b1fob','lab-b1rvc','lab-b1ok','lab-b2sum','lab-b2rvc','lab-b2ok','lab-b3pct','lab-b3ok','lab-bcalc','lab-b4-0','lab-b4-1','lab-b4-2','lab-b4-3');
+            const blank = ids.filter(i => !lv(i)).length + labS.mats.filter((m, i) => !lv('lab-cls-' + i)).length;
+            if (blank && !confirm(`Còn ${blank} mục chưa điền. Vẫn xuất PDF?`)) return;
+            labS.res = labEval();
+            labReport();
+            html2pdf().set({
+                margin: 10,
+                filename: `Thuc_Hanh_Chuong3_${labS.id}_${labS.name.replace(/\s+/g, '_')}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', 'h4', '.lab-keep'] }
+            }).from(document.getElementById('lab-report')).save();
+        }
+
+        // Cập nhật bản báo cáo ngay khi sinh viên nhập liệu
+        document.addEventListener('input', e => { if (labS && e.target.closest('#lab-work')) labReport(); });
+        document.addEventListener('change', e => { if (labS && e.target.closest('#lab-work')) labReport(); });
     </script>
 </body>
 </html>
